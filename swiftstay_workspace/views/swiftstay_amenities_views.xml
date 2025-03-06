@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!--    SwiftStay Amenities Views-->
+
+        <!--List View-->
+        <record id="view_swiftstay_amenities_tree" model="ir.ui.view">
+            <field name="name">swiftstay.amenities.tree</field>
+            <field name="model">swiftstay.amenities</field>
+            <field name="arch" type="xml">
+                <tree string= "Amenities">
+                    <field name="amenity_name"/>
+
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="view_swiftstay_amenities_form" model="ir.ui.view">
+            <field name="name">swiftstay.amenities.form</field>
+            <field name="model">swiftstay.amenities</field>
+            <field name="arch" type="xml">
+                <form string="Amenities">
+                    <sheet>
+                        <group>
+                            <field name="amenity_name"/>
+
+
+                        </group>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+        <record id="action_swiftstay_amenities" model="ir.actions.act_window">
+            <field name="name">Amenities</field>
+            <field name="res_model">swiftstay.amenities</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+    </data>
+</odoo>

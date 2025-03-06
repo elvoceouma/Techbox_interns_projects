@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- SwiftStay Rooms Views -->
+
+        <!-- List View -->
+        <record id="view_swiftstay_rooms_tree" model="ir.ui.view">
+            <field name="name">swiftstay.rooms.tree</field>
+            <field name="model">swiftstay.rooms</field>
+            <field name="arch" type="xml">
+                <tree string="Rooms">
+                    <field name="name"/>
+                    <field name="room_type_id"/>
+                    <field name="num_beds"/>
+                    <field name="floor_number"/>
+                    <field name="price_per_night"/>
+                    <field name="room_status"/>
+                    <field name="room_image"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_swiftstay_rooms_form" model="ir.ui.view">
+            <field name="name">swiftstay.rooms.form</field>
+            <field name="model">swiftstay.rooms</field>
+            <field name="arch" type="xml">
+                <form string="Rooms">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="room_type_id"/>
+                            <field name="num_beds"/>
+                            <field name="floor_number"/>
+                            <field name="price_per_night"/>
+                            <field name="room_status"/>
+                            <field name="room_image"/>
+                         
+                        </group>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+        <record id="view_swiftstay_rooms_kanban" model="ir.ui.view">
+            <field name="name">swiftstay.rooms.kanban</field>
+            <field name="model">swiftstay.rooms</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile" sample="1" default_group_by="room_status">
+                    <field name="name"/>
+                    <field name="room_type_id"/>
+                    <field name="num_beds"/>
+                    <field name="floor_number"/>
+                    <field name="price_per_night"/>
+                    <field name="room_status"/>
+                    <field name="room_image"/>
+                    <field name="room_status"/>
+                   
+
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="oe_kanban_details">
+                                    <ul>
+                                        <li>Room Number: <field name="name"/>
+                                        </li>
+                                        <li>Room Type: <field name="room_type_id"/>
+                                        </li>
+                                        <li>Number of Beds: <field name="num_beds"/>
+                                        </li>
+                                        <li>Floor Number: <field name="floor_number"/>
+                                        </li>
+                                        <li>Price Per Night: <field name="price_per_night"/>
+                                        </li>
+                                        <li>Room Status: <field name="room_status"/>
+                                        </li>
+                                        <li>Room Image: <field name="room_image"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+        <!-- Action -->
+        <record id="action_swiftstay_rooms" model="ir.actions.act_window">
+            <field name="name">Rooms</field>
+            <field name="res_model">swiftstay.rooms</field>
+            <field name="view_mode">tree,form,kanban</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!--    SwiftStay Booking Views-->
+
+        <!--List View-->
+        <record id="view_swiftstay_booking_tree" model="ir.ui.view">
+            <field name="name">swiftstay.booking.tree</field>
+            <field name="model">swiftstay.booking</field>
+            <field name="arch" type="xml">
+                <tree string= "Booking">
+                    <field name="guest_name"/>
+                    <field name="id_no"/>
+                    <field name="passport_no"/>
+                    <field name="email"/>
+                    <field name="phone_no"/>
+                    <field name="check_in"/>
+                    <field name="check_out"/>
+                    <field name="room_no"/>
+
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="view_swiftstay_booking_form" model="ir.ui.view">
+            <field name="name">swiftstay.booking.form</field>
+            <field name="model">swiftstay.booking</field>
+            <field name="arch" type="xml">
+                <form string="Booking">
+                    <sheet>
+                        <group>
+                            <field name="guest_name"/>
+                            <field name="id_no"/>
+                            <field name="passport_no"/>
+                            <field name="email"/>
+                            <field name="phone_no"/>
+                            <field name="check_in"/>
+                            <field name="check_out"/>
+                            <field name="room_no"/>
+
+
+                        </group>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+        <record id="action_swiftstay_booking" model="ir.actions.act_window">
+            <field name="name">Booking</field>
+            <field name="res_model">swiftstay.booking</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+    </data>
+</odoo>

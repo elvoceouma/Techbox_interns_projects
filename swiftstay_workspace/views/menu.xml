@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--Menu Items-->
+    <menuitem id="menu_root" name="SwiftStay" sequence="10"/>
+    <menuitem id="menu_swiftstay_swiftstay" name="SwiftStay" parent="menu_root" action="action_swiftstay_swiftstay" sequence="1"/>
+    <menuitem id="menu_swiftstay_amenities" name="Amenities" parent="menu_root" action="action_swiftstay_amenities" sequence="1"/>
+    <menuitem id="menu_swiftstay_room_types" name="Room Types" parent="menu_root" action="action_swiftstay_room_types" sequence="1"/>
+    <menuitem id="menu_swiftstay_rooms" name="Rooms" parent="menu_root" action="action_swiftstay_rooms" sequence="1"/>
+    <menuitem id="menu_swiftstay_booking" name="Booking" parent="menu_root" action="action_swiftstay_booking" sequence="1"/>
+
+</odoo>
