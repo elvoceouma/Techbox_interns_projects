@@ -9,7 +9,7 @@ class Invoice(models.Model):
     id_no = fields.Integer(related='booking_id.id_no', string="ID Number", store=True, tracking=True)
     passport_no = fields.Char(related='booking_id.passport_no', string="Passport Number", store=True, tracking=True)
     email = fields.Char(related='booking_id.email', string="Email Address", store=True, tracking=True)
-    phone_no = fields.Integer(related='booking_id.phone_no', string="Phone Number", store=True, tracking=True)
+    phone_no = fields.Char(related='booking_id.phone_no', string="Phone Number", store=True, tracking=True)
     room_id = fields.Many2one(related='booking_id.room_no', string="Room Number", store=True, tracking=True)
     room_type_id = fields.Many2one(related='booking_id.room_no.room_type_id', string="Room Type", store=True, tracking=True)
     check_in = fields.Date(related='booking_id.check_in', string="Check-in Date", store=True, tracking=True)

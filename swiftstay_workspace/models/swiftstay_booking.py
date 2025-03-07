@@ -8,8 +8,8 @@ class Booking(models.Model):
     guest_name = fields.Many2one('res.partner', string="Guest Name", required=True)
     id_no = fields.Integer(string='ID Number')
     passport_no = fields.Char(string='Passport Number')
-    email = fields.Char(string='Email Address', required=True)
-    phone_no = fields.Integer(string='Phone Number', required=True)
+    email = fields.Char(string='Email Address', compute="compute_email", readonly=True)
+    phone_no = fields.Char(string='Phone Number', compute="compute_phone_number", readonly=True)
     check_in = fields.Date(string='Check-in Date', required=True)
     check_out = fields.Date(string='Check-out Date', required=True)
     duration = fields.Integer(compute='compute_duration', string='Duration (Days)', store=True)
@@ -19,6 +19,24 @@ class Booking(models.Model):
         required=True, 
         domain=[('room_status', '=', 'available')]
     )
+    
+    @api.depends('guest_name')
+    def compute_email(self):
+        for rec in self:
+            if rec.guest_name:
+                
+                rec.email = rec.guest_name.email
+            else:
+                rec.email = False
+                
+    @api.depends('guest_name')
+    def compute_phone_number(self):
+        for rec in self:
+            if rec.guest_name:
+             
+                rec.phone_no = rec.guest_name.mobile
+            else:
+                rec.phone_no = False
 
     @api.model
     def create(self, vals):
