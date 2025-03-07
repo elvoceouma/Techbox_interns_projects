@@ -4,3 +4,4 @@ access_swiftstay_amenities, swiftstay.amenities,model_swiftstay_amenities,base.g
 access_swiftstay_room_types, swiftstay.room.types,model_swiftstay_roomtypes,base.group_user,1,1,1,1
 access_swiftstay_rooms, swiftstay.rooms,model_swiftstay_rooms,base.group_user,1,1,1,1
 access_swiftstay_booking, swiftstay.booking,model_swiftstay_booking,base.group_user,1,1,1,1
+access_swiftstay_invoice, swiftstay.invoice,model_swiftstay_invoice,base.group_user,1,1,1,1

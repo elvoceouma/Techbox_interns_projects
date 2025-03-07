@@ -9,6 +9,7 @@
     'author': 'Zahabiya Shamoon',
     'depends': [
         'base',
+        'mail',
     ],
     'data': [
         'security/ir.model.access.csv',
@@ -17,6 +18,7 @@
         'views/swiftstay_room_types_views.xml',
         'views/swiftstay_rooms_views.xml',
         'views/swiftstay_booking_views.xml',
+        'views/swiftstay_invoice_views.xml',
         'views/menu.xml',
         
         

@@ -16,6 +16,7 @@
                     <field name="phone_no"/>
                     <field name="check_in"/>
                     <field name="check_out"/>
+                    <field name="duration"/>
                     <field name="room_no"/>
 
                 </tree>
@@ -38,6 +39,7 @@
                             <field name="phone_no"/>
                             <field name="check_in"/>
                             <field name="check_out"/>
+                            <field name="duration"/>
                             <field name="room_no"/>
 
 
