@@ -7,7 +7,7 @@ class Booking(models.Model):
 
     guest_name = fields.Many2one('res.partner', string="Guest Name", required=True)
     id_no = fields.Integer(string='ID Number')
-    passport_no = fields.Char(string='Passport Number', required=True)
+    passport_no = fields.Char(string='Passport Number')
     email = fields.Char(string='Email Address', required=True)
     phone_no = fields.Integer(string='Phone Number', required=True)
     check_in = fields.Date(string='Check-in Date', required=True)

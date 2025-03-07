@@ -3,7 +3,7 @@ from odoo import models, fields, api
 class Invoice(models.Model):
     _name = 'swiftstay.invoice'
     _description = 'Invoice Model'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
+    _inherit = ['mail.thread']
 
     booking_id = fields.Many2one('swiftstay.booking', string='Guest Name', required=True, tracking=True)
     id_no = fields.Integer(related='booking_id.id_no', string="ID Number", store=True, tracking=True)
@@ -17,11 +17,22 @@ class Invoice(models.Model):
     duration = fields.Integer(related='booking_id.duration', string="Duration (Days)", store=True, tracking=True)
     price_per_night = fields.Float(related='booking_id.room_no.price_per_night', string="Price per night (Ksh.)", store=True, tracking=True)
     total_amount = fields.Float(string="Total Amount (Ksh.)", compute='compute_total_amount', store=True, tracking=True)
-    payment_method = fields.Char(string="Payment Method", required=True)
+    payment_method = fields.Selection([
+    ('mpesa', 'M-Pesa'),
+    ('airtel_money', 'Airtel Money'),
+    ('credit_card', 'Credit Card'),
+    ('debit_card', 'Debit Card'),
+    ('bank_transfer', 'Bank Transfer'),
+    ('paypal', 'PayPal'),
+    ('cash', 'Cash'),
+    ('mobile_money', 'Mobile Money')
+], string="Payment Method", required=True, tracking=True)
+
     status = fields.Selection([
         ('unpaid', 'Unpaid'),
         ('paid', 'Paid')
     ], string='Payment Status', default='unpaid', required=True, tracking=True)
+    
     
     
 
@@ -30,4 +41,3 @@ class Invoice(models.Model):
         for record in self:
             if record.booking_id.duration and record.booking_id.room_no:
                 record.total_amount = record.booking_id.duration * record.booking_id.room_no.price_per_night
-
