@@ -18,6 +18,9 @@
                     <field name="check_out"/>
                     <field name="duration"/>
                     <field name="room_no"/>
+                    <field name="room_type_id"/>
+                    <field name="price_per_night"/>
+            
 
                 </tree>
             </field>
@@ -41,6 +44,9 @@
                             <field name="check_out"/>
                             <field name="duration"/>
                             <field name="room_no"/>
+                            <field name="room_type_id"/>
+                            <field name="price_per_night"/>
+                          
 
 
                         </group>

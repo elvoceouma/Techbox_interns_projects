@@ -11,6 +11,7 @@
                 <tree string= "Room Types">
                     <field name="name"/>
                     <field name="amenity_ids"/>
+                    <field name="price_per_night"/>
 
                 </tree>
             </field>
@@ -27,6 +28,7 @@
                         <group>
                             <field name="name"/>
                             <field name="amenity_ids"/>
+                            <field name="price_per_night"/>
 
 
                         </group>

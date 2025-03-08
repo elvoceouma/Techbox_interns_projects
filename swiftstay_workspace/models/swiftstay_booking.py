@@ -19,6 +19,11 @@ class Booking(models.Model):
         required=True, 
         domain=[('room_status', '=', 'available')]
     )
+    room_type_id = fields.Char(related='room_no.room_type_id.name', string="Room Type", store=True)
+    price_per_night = fields.Float(related='room_no.price_per_night', string="Price Per Night (Ksh.)", store=True)
+   
+
+    
     
     @api.depends('guest_name')
     def compute_email(self):
