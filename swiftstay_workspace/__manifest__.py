@@ -14,9 +14,9 @@
     'data': [
         'security/ir.model.access.csv',
         'views/swiftstay_core_views.xml',
+        'views/swiftstay_rooms_views.xml',
         'views/swiftstay_amenities_views.xml',
         'views/swiftstay_room_types_views.xml',
-        'views/swiftstay_rooms_views.xml',
         'views/swiftstay_booking_views.xml',
         'views/swiftstay_invoice_views.xml',
         'views/menu.xml',

@@ -35,10 +35,20 @@
                 </form>
             </field>
         </record>
+        <record id="view_swiftstay_room_types_search" model="ir.ui.view">
+            <field name="name">swiftstay.room.types.search</field>
+            <field name="model">swiftstay.roomtypes</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+
+                </search>
+            </field>
+        </record>
         <record id="action_swiftstay_room_types" model="ir.actions.act_window">
             <field name="name">Room Types</field>
             <field name="res_model">swiftstay.roomtypes</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,search</field>
 
         </record>
 

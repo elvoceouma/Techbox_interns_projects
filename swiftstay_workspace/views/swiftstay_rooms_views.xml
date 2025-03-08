@@ -35,7 +35,7 @@
                             <field name="price_per_night"/>
                             <field name="room_status"/>
                             <field name="room_image"/>
-                         
+
                         </group>
                     </sheet>
                     <chatter/>
@@ -55,7 +55,7 @@
                     <field name="room_status"/>
                     <field name="room_image"/>
                     <field name="room_status"/>
-                   
+
 
                     <templates>
                         <t t-name="kanban-box">
@@ -85,12 +85,30 @@
             </field>
         </record>
 
+        <record id="view_swiftstay_rooms_search" model="ir.ui.view">
+            <field name="name">swiftstay.rooms.search</field>
+            <field name="model">swiftstay.rooms</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="room_status"/>
+                    <field name="room_type_id"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Room Status" name="group_by_room_status" context="{'group_by': 'room_status'}"/>
+                        <filter string="Room Type" name="group_by_room_type" context="{'group_by': 'room_type_id'}"/>
+                    </group>
+
+                </search>
+
+            </field>
+        </record>
+
 
         <!-- Action -->
         <record id="action_swiftstay_rooms" model="ir.actions.act_window">
             <field name="name">Rooms</field>
             <field name="res_model">swiftstay.rooms</field>
-            <field name="view_mode">tree,form,kanban</field>
+            <field name="view_mode">kanban,tree,form,search</field>
         </record>
 
     </data>

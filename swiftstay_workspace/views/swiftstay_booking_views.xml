@@ -49,6 +49,21 @@
                 </form>
             </field>
         </record>
+
+        <record id="view_swiftstay_booking_search" model="ir.ui.view">
+            <field name="name">swiftstay.booking.search</field>
+            <field name="model">swiftstay.booking</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="guest_name"/>
+                     <field name="room_no"/>
+
+                </search>
+            </field>
+        </record>
+
+
+
         <record id="action_swiftstay_booking" model="ir.actions.act_window">
             <field name="name">Booking</field>
             <field name="res_model">swiftstay.booking</field>

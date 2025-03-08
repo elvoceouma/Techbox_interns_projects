@@ -76,7 +76,7 @@
                     <field name="price_per_night"/>
                     <field name="total_amount"/>
                     <field name="payment_method"/>
-                    <!-- <field name="status"/> -->
+                    <field name="status"/>
 
                     <templates>
                         <t t-name="kanban-box">
@@ -119,6 +119,24 @@
                 </kanban>
             </field>
         </record>
+
+        <record id="view_swiftstay_invoice_search" model="ir.ui.view">
+            <field name="name">swiftstay.invoice.search</field>
+            <field name="model">swiftstay.invoice</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="booking_id"/>
+                    <field name="status"/>
+
+                    <group expand="0" string="Group By">
+                        <filter string="Payment Status" name="group_by_payment_status" context="{'group_by': 'status'}"/>
+                        
+                    </group>
+
+                </search>
+            </field>
+        </record>
+
         <record id="action_swiftstay_invoice" model="ir.actions.act_window">
             <field name="name">Invoice</field>
             <field name="res_model">swiftstay.invoice</field>
