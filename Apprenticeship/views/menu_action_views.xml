@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--Menu Items-->
+    <menuitem id="menu_root" name="Apprentice" sequence="10"/>
+    <menuitem id="menu_apprentice_apprentice" name="Apprentice" parent="menu_root" action="action_apprentice_apprentice" sequence="1"/>
+</odoo>
