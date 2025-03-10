@@ -17,7 +17,8 @@ class Booking(models.Model):
     room_no = fields.Many2one(
         'swiftstay.rooms', 
         string='Room Number', 
-        required=True 
+        required=True,
+        domain="[('room_status', '=', 'available'), ('room_type_id', '=', name)]"
     )
 
     price_per_night = fields.Float(related='room_no.price_per_night', string="Price Per Night (Ksh.)", store=True)

@@ -75,7 +75,7 @@
                     <field name="check_out"/>
                     <field name="duration"/>
                     <field name="name"/>
-                    <field name="room_no" domain="[('room_status', '=', 'available'), ('room_type_id', '=', name)]"/>
+                    <field name="room_no"/>
                     <field name="price_per_night"/>
                     <field name="is_checked_out"/>
 
@@ -125,6 +125,25 @@
                 <search>
                     <field name="guest_name"/>
                     <field name="room_no"/>
+                    <field name="email"/>
+                    <field name="phone_no"/>
+                    <field name="check_in"/>
+                    <field name="check_out"/>
+                    <field name="is_checked_out"/>
+
+
+                    <filter name="filter_checked_out" string="Checked Out" domain="[('is_checked_out', '=', True)]"/>
+                    <filter name="filter_not_checked_out" string="Not Checked Out" domain="[('is_checked_out', '=', False)]"/>
+                    <filter name="filter_upcoming_checkin" string="Upcoming Bookings" domain="[('check_in', '>=', context_today())]"/>
+                    <filter name="filter_past_checkouts" string="Past Bookings" domain="[('check_out', '&lt;', context_today())]"/>
+
+                    <group expand="0" string="Group By">
+                        <filter name="group_by_guest" string="Guest Name" context="{'group_by': 'guest_name'}"/>
+                        <filter name="group_by_room" string="Room Number" context="{'group_by': 'room_no'}"/>
+                        <filter name="group_by_check_in" string="Check-in Date" context="{'group_by': 'check_in'}"/>
+                        <filter name="group_by_check_out" string="Check-out Date" context="{'group_by': 'check_out'}"/>
+                        <filter name="group_by_checked_out" string="Checked Out Status" context="{'group_by': 'is_checked_out'}"/>
+                    </group>
 
                 </search>
             </field>
@@ -136,6 +155,7 @@
             <field name="name">Booking</field>
             <field name="res_model">swiftstay.booking</field>
             <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="view_swiftstay_booking_search"/>
 
         </record>
 
