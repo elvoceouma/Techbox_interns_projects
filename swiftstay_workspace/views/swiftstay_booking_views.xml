@@ -17,10 +17,12 @@
                     <field name="check_in"/>
                     <field name="check_out"/>
                     <field name="duration"/>
-                    <field name="room_no"/>
-                    <field name="room_type_id"/>
+                    <field name="name"/>
+                    <field name="room_no" domain="[('room_status', '=', 'available'), ('room_type_id', '=', name)]"/>
+
                     <field name="price_per_night"/>
-            
+                    <field name="is_checked_out"/>
+
 
                 </tree>
             </field>
@@ -43,10 +45,11 @@
                             <field name="check_in"/>
                             <field name="check_out"/>
                             <field name="duration"/>
-                            <field name="room_no"/>
-                            <field name="room_type_id"/>
+                            <field name="name"/>
+                            <field name="room_no" domain="[('room_status', '=', 'available'), ('room_type_id', '=', name)]"/>
                             <field name="price_per_night"/>
-                          
+                            <field name="is_checked_out"/>
+
 
 
                         </group>
@@ -56,13 +59,72 @@
             </field>
         </record>
 
+
+
+        <record id="view_swiftstay_booking_kanban" model="ir.ui.view">
+            <field name="name">swiftstay.booking.kanban</field>
+            <field name="model">swiftstay.booking</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile" sample="1" default_group_by="is_checked_out">
+                    <field name="guest_name"/>
+                    <field name="id_no"/>
+                    <field name="passport_no"/>
+                    <field name="email"/>
+                    <field name="phone_no"/>
+                    <field name="check_in"/>
+                    <field name="check_out"/>
+                    <field name="duration"/>
+                    <field name="name"/>
+                    <field name="room_no" domain="[('room_status', '=', 'available'), ('room_type_id', '=', name)]"/>
+                    <field name="price_per_night"/>
+                    <field name="is_checked_out"/>
+
+
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="oe_kanban_details">
+                                    <ul>
+                                        <li>Guest Name: <field name="guest_name"/>
+                                        </li>
+                                        <li>ID Number: <field name="id_no"/>
+                                        </li>
+                                        <li>Passport Number: <field name="passport_no"/>
+                                        </li>
+                                        <li>Email Address <field name="email"/>
+                                        </li>
+                                        <li>Phone Number: <field name="phone_no"/>
+                                        </li>
+                                        <li>Check-in: <field name="check_in"/>
+                                        </li>
+                                        <li>Check-out: <field name="check_out"/>
+                                        </li>
+                                        <li>Duration: <field name="duration"/>
+                                        </li>
+                                        <li>Room Type: <field name="name"/>
+                                        </li>
+                                        <li>Room Number: <field name="room_no"/>
+                                        </li>
+                                        <li>Price Per Night: <field name="price_per_night"/>
+                                        </li>
+                                        <li>Checked Out: <field name="is_checked_out"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
         <record id="view_swiftstay_booking_search" model="ir.ui.view">
             <field name="name">swiftstay.booking.search</field>
             <field name="model">swiftstay.booking</field>
             <field name="arch" type="xml">
                 <search>
                     <field name="guest_name"/>
-                     <field name="room_no"/>
+                    <field name="room_no"/>
 
                 </search>
             </field>
@@ -73,7 +135,7 @@
         <record id="action_swiftstay_booking" model="ir.actions.act_window">
             <field name="name">Booking</field>
             <field name="res_model">swiftstay.booking</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">kanban,tree,form</field>
 
         </record>
 
