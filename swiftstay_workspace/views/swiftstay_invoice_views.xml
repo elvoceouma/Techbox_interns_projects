@@ -76,7 +76,7 @@
                     <field name="price_per_night"/>
                     <field name="total_amount"/>
                     <field name="payment_method"/>
-                    <!-- <field name="status"/> -->
+                    <field name="status"/>
 
                     <templates>
                         <t t-name="kanban-box">
@@ -119,10 +119,38 @@
                 </kanban>
             </field>
         </record>
+
+        <record id="view_swiftstay_invoice_search" model="ir.ui.view">
+            <field name="name">swiftstay.invoice.search</field>
+            <field name="model">swiftstay.invoice</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="booking_id"/>
+                    <field name="status"/>
+                    <field name="email"/>
+                    <field name="phone_no"/>
+        
+
+                    <filter string="Paid Invoices" name="paid" domain="[('status', '=', 'paid')]"/>
+                    <filter string="Unpaid Invoices" name="unpaid" domain="[('status', '=', 'unpaid')]"/>
+
+
+                    <group expand="0" string="Group By">
+                        <filter string="Payment Status" name="group_by_payment_status" context="{'group_by': 'status'}"/>
+                        <filter string="Payment Method" name="group_by_payment_method" context="{'group_by': 'payment_method'}"/>
+                        <filter string="Room Type" name="group_by_room_type" context="{'group_by': 'room_type_id'}"/>
+                    </group>
+
+
+                </search>
+            </field>
+        </record>
+
         <record id="action_swiftstay_invoice" model="ir.actions.act_window">
             <field name="name">Invoice</field>
             <field name="res_model">swiftstay.invoice</field>
             <field name="view_mode">tree,form,kanban</field>
+            <field name="search_view_id" ref="view_swiftstay_invoice_search"/>
 
         </record>
 
