@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Dashboard View -->
+        <record id="view_rahisi_dashboard" model="ir.ui.view">
+            <field name="name">rahisi.dashboard</field>
+            <field name="model">rahisi.dashboard</field>
+            <field name="arch" type="xml">
+                <form string="Rahisi Dashboard" create="false" edit="false">
+                    <sheet>
+                        <group>
+                            <div class="oe_dashboard_layout">
+                                <div class="row">
+                                    <!-- Summary Section -->
+                                    <div class="col-lg-4">
+                                        <h3>Summary</h3>
+                                        <div class="o_kanban_card_content">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <label for="total_providers">Service Providers</label>
+                                                    <field name="total_providers" readonly="1"/>
+                                                </div>
+                                                <div class="col-6">
+                                                    <label for="total_customers">Customers</label>
+                                                    <field name="total_customers" readonly="1"/>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col-6">
+                                                    <label for="active_jobs">Active Jobs</label>
+                                                    <field name="active_jobs" readonly="1"/>
+                                                </div>
+                                                <div class="col-6">
+                                                    <label for="completed_jobs">Completed Jobs</label>
+                                                    <field name="completed_jobs" readonly="1"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Recent Jobs Section -->
+                                    <div class="col-lg-8">
+                                        <h3>Recent Jobs</h3>
+                                        <field name="recent_jobs" readonly="1">
+                                            <tree>
+                                                <field name="name"/>
+                                                <field name="customer_id"/>
+                                                <field name="provider_id"/>
+                                                <field name="service_id"/>
+                                                <field name="date"/>
+                                                <field name="state" decoration-success="state == 'completed'"
+                                                    decoration-info="state == 'in_progress'"
+                                                    decoration-warning="state == 'requested'"/>
+                                                <field name="total_price" widget="monetary"/>
+                                            </tree>
+                                        </field>
+                                    </div>
+                                </div>
+
+                                <!-- Top Providers and Popular Categories -->
+                                <div class="row mt-4">
+                                    <!-- Top Rated Providers -->
+                                    <div class="col-lg-6">
+                                        <h3>Top Rated Providers</h3>
+                                        <field name="top_providers" readonly="1">
+                                            <kanban>
+                                                <field name="name"/>
+                                                <field name="rating"/>
+                                                <field name="image" widget="image"/>
+                                                <field name="review_count"/>
+
+                                                <templates>
+                                                    <t t-name="kanban-box">
+                                                        <div class="oe_kanban_global_click">
+                                                            <div class="row">
+                                                                <div class="col-4">
+                                                                    <img t-att-src="kanban_image('rahisi.service.provider', 'image', record.id.raw_value)"
+                                                                        class="oe_kanban_image"/>
+                                                                </div>
+                                                                <div class="col-8">
+                                                                    <strong>
+                                                                        <field name="name"/>
+                                                                    </strong>
+                                                                    <div>
+                                                                        <span>
+                                                                            Rating: <field name="rating"/> (
+                                                                            <field name="review_count"/> reviews)
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </t>
+                                                </templates>
+                                            </kanban>
+                                        </field>
+                                    </div>
+
+                                    <!-- Popular Service Categories -->
+                                    <div class="col-lg-6">
+                                        <h3>Popular Service Categories</h3>
+                                        <field name="popular_categories" readonly="1">
+                                            <kanban>
+                                                <field name="name"/>
+                                                <field name="job_count"/>
+                                                <field name="icon" widget="image"/>
+
+                                                <templates>
+                                                    <t t-name="kanban-box">
+                                                        <div class="oe_kanban_global_click">
+                                                            <div class="row">
+                                                                <div class="col-4">
+                                                                    <img t-att-src="kanban_image('rahisi.service.category', 'icon', record.id.raw_value)"
+                                                                        class="oe_kanban_image"/>
+                                                                </div>
+                                                                <div class="col-8">
+                                                                    <strong>
+                                                                        <field name="name"/>
+                                                                    </strong>
+                                                                    <div>
+                                                                        <span>Jobs: <field name="job_count"/></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </t>
+                                                </templates>
+                                            </kanban>
+                                        </field>
+                                    </div>
+                                </div>
+                            </div>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Actions -->
+        <record id="action_rahisi_dashboard" model="ir.actions.act_window">
+            <field name="name">Dashboard</field>
+            <field name="res_model">rahisi.dashboard</field>
+            <field name="view_mode">form</field>
+            <field name="target">current</field>
+        </record>
+    </data>
+</odoo>

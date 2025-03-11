@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Service Views -->
+        <record id="view_rahisi_service_tree" model="ir.ui.view">
+            <field name="name">rahisi.service.tree</field>
+            <field name="model">rahisi.service</field>
+            <field name="arch" type="xml">
+                <tree string="Services">
+                    <field name="name"/>
+                    <field name="provider_id"/>
+                    <field name="category_id"/>
+                    <field name="price" widget="monetary"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_rahisi_service_form" model="ir.ui.view">
+            <field name="name">rahisi.service.form</field>
+            <field name="model">rahisi.service</field>
+            <field name="arch" type="xml">
+                <form string="Service">
+                    <sheet>
+                        <!-- Title -->
+                        <div class="oe_title">
+                            <field name="name" placeholder="e.g. House Cleaning"/>
+                        </div>
+
+                        <!-- General Information -->
+                        <group>
+                            <group>
+                                <field name="provider_id"/>
+                                <field name="category_id"/>
+                                <field name="price" widget="monetary"/>
+                            </group>
+                            <group>
+                                <field name="active"/>
+                            </group>
+                        </group>
+
+                        <!-- Additional Information -->
+                        <notebook>
+                            <page string="Description">
+                                <field name="description" placeholder="Detailed description of the service..."/>
+                            </page>
+                            <page string="Portfolio">
+                                <field name="portfolio_images" widget="many2many_binary"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Service Kanban View -->
+        <record id="view_rahisi_service_kanban" model="ir.ui.view">
+            <field name="name">rahisi.service.kanban</field>
+            <field name="model">rahisi.service</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name="name"/>
+                    <field name="provider_id"/>
+                    <field name="category_id"/>
+                    <field name="price"/>
+                    <field name="active"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_rahisi_service_kanban">
+                                <div class="oe_kanban_details">
+                                    <div class="o_kanban_record_top mb-0">
+                                        <div class="o_kanban_record_headings">
+                                            <strong class="o_kanban_record_title">
+                                                <field name="name"/>
+                                            </strong>
+                                        </div>
+                                        <div class="o_dropdown_kanban dropdown">
+                                            <a class="dropdown-toggle o-no-caret btn" role="button" data-toggle="dropdown" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                                <span class="fa fa-ellipsis-v"/>
+                                            </a>
+                                            <div class="dropdown-menu" role="menu">
+                                                <t t-if="widget.editable">
+                                                    <a role="menuitem" type="edit" class="dropdown-item">Edit</a>
+                                                </t>
+                                                <t t-if="widget.deletable">
+                                                    <a role="menuitem" type="delete" class="dropdown-item">Delete</a>
+                                                </t>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="o_kanban_record_body">
+                                        <div class="text-muted">
+                                            <strong>Provider: </strong><field name="provider_id"/>
+                                        </div>
+                                        <div class="text-muted">
+                                            <strong>Category: </strong><field name="category_id"/>
+                                        </div>
+                                        <div class="text-muted">
+                                            <strong>Price: </strong><field name="price" widget="monetary"/>
+                                        </div>
+                                    </div>
+                                    <div class="o_kanban_record_bottom">
+                                        <div class="oe_kanban_bottom_left">
+                                            <field name="active" widget="boolean_toggle"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Service Action -->
+        <record id="action_rahisi_service" model="ir.actions.act_window">
+            <field name="name">Services</field>
+            <field name="res_model">rahisi.service</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first service!
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

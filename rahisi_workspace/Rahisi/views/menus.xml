@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!--Menus-->
+<menuitem id= "menu_root" name="Rahisi" sequence="10" />
+<menuitem id="menu_rahisi" name="Rahisi" parent="menu_root" action="action_rahisi_dashboard" sequence="1" groups="base.group_user"/>
+<menuitem id="menu_rahisi_service_category" name="Service Categories" parent="menu_root" action="action_rahisi_service_category" sequence="2" groups="base.group_user"/>
+
+<!-- Service Management -->
+<menuitem id="menu_service_management" name="Service Management" parent="menu_root" sequence="10" groups="base.group_user"/>
+<menuitem id="menu_rahisi_service" name="Services" parent="menu_service_management" action="action_rahisi_service" sequence="1" groups="base.group_user"/>
+<menuitem id="menu_rahisi_service_provider" name="Service Providers" parent="menu_service_management" action="action_rahisi_service_provider" sequence="2" groups="base.group_user"/>
+
+<!-- Customer Management -->
+<menuitem id="menu_customer_management" name="Customer Management" parent="menu_root" sequence="20" groups="base.group_user"/>
+<menuitem id="menu_rahisi_customer" name="Customers" parent="menu_customer_management" action="action_rahisi_customer" sequence="1" groups="base.group_user"/>
+
+<!-- Job Operations -->
+<menuitem id="menu_job_operations" name="Job Operations" parent="menu_root" sequence="30" groups="base.group_user"/>
+<menuitem id="menu_rahisi_job" name="Jobs" parent="menu_job_operations" action="action_rahisi_job" sequence="1" groups="base.group_user"/>
+<menuitem id="menu_rahisi_review" name="Reviews" parent="menu_job_operations" action="action_rahisi_review" sequence="2" groups="base.group_user"/>
+
+<!-- Configuration -->
+<menuitem id="menu_rahisi_configuration" name="Configuration" parent="menu_root" sequence="100" groups="base.group_system"/>
+<menuitem id="menu_rahisi_transportation_config" name="Transportation Cost" parent="menu_rahisi_configuration" action="action_rahisi_transportation_config" sequence="1" groups="base.group_system"/>
+
+</odoo>
+
