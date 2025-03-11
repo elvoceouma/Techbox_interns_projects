@@ -15,7 +15,7 @@
                     <field name="floor_number"/>
                     <field name="price_per_night"/>
                     <field name="room_status"/>
-                    <field name="room_image"/>
+                    <field name="room_image" widget="image"/>
                 </tree>
             </field>
         </record>
@@ -34,14 +34,16 @@
                             <field name="floor_number"/>
                             <field name="price_per_night"/>
                             <field name="room_status"/>
-                            <field name="room_image"/>
-                         
+                            <field name="room_image" widget="image"/>
+
                         </group>
                     </sheet>
                     <chatter/>
                 </form>
             </field>
         </record>
+
+
         <record id="view_swiftstay_rooms_kanban" model="ir.ui.view">
             <field name="name">swiftstay.rooms.kanban</field>
             <field name="model">swiftstay.rooms</field>
@@ -53,9 +55,9 @@
                     <field name="floor_number"/>
                     <field name="price_per_night"/>
                     <field name="room_status"/>
-                    <field name="room_image"/>
-                    <field name="room_status"/>
-                   
+                    <field name="room_image" widget="image"/>
+
+
 
                     <templates>
                         <t t-name="kanban-box">
@@ -74,8 +76,11 @@
                                         </li>
                                         <li>Room Status: <field name="room_status"/>
                                         </li>
-                                        <li>Room Image: <field name="room_image"/>
+                                        <li>
+                                            <field name="room_image" widget="image"/>
                                         </li>
+
+
                                     </ul>
                                 </div>
                             </div>
@@ -85,12 +90,43 @@
             </field>
         </record>
 
+        <record id="view_swiftstay_rooms_search" model="ir.ui.view">
+            <field name="name">swiftstay.rooms.search</field>
+            <field name="model">swiftstay.rooms</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="room_status"/>
+                    <field name="room_type_id"/>
+                    <field name="floor_number"/>
+                    <field name="price_per_night"/>
+
+
+                    <filter string="Available Rooms" name="filter_available" domain="[('room_status', '=', 'available')]"/>
+                    <filter string="Occupied Rooms" name="filter_occupied" domain="[('room_status', '=', 'occupied')]"/>
+                    <filter string="Rooms Under Maintenance" name="filter_occupied" domain="[('room_status', '=', 'maintenance')]"/>
+                    <filter string="Affordable Rooms" name="filter_affordable" domain="[('price_per_night', '&lt;', 15000)]"/>
+                    <filter string="Premium Rooms" name="filter_premium" domain="[('price_per_night', '&gt;', 20000)]"/>
+
+
+                    <group expand="0" string="Group By">
+                        <filter string="Room Status" name="group_by_room_status" context="{'group_by': 'room_status'}"/>
+                        <filter string="Room Type" name="group_by_room_type" context="{'group_by': 'room_type_id'}"/>
+                        <filter string="Floor Number" name="group_by_floor" context="{'group_by': 'floor_number'}"/>
+                    </group>
+
+                </search>
+
+            </field>
+        </record>
+
 
         <!-- Action -->
         <record id="action_swiftstay_rooms" model="ir.actions.act_window">
             <field name="name">Rooms</field>
             <field name="res_model">swiftstay.rooms</field>
-            <field name="view_mode">tree,form,kanban</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="view_swiftstay_rooms_search"/>
         </record>
 
     </data>

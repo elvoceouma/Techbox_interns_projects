@@ -13,12 +13,18 @@ class Booking(models.Model):
     check_in = fields.Date(string='Check-in Date', required=True)
     check_out = fields.Date(string='Check-out Date', required=True)
     duration = fields.Integer(compute='compute_duration', string='Duration (Days)', store=True)
+    name = fields.Many2one('swiftstay.roomtypes', string="Room Type")
     room_no = fields.Many2one(
         'swiftstay.rooms', 
         string='Room Number', 
-        required=True, 
-        domain=[('room_status', '=', 'available')]
+        required=True,
+        domain="[('room_status', '=', 'available'), ('room_type_id', '=', name)]"
     )
+
+    price_per_night = fields.Float(related='room_no.price_per_night', string="Price Per Night (Ksh.)", store=True)
+    is_checked_out = fields.Boolean(string='Checked Out?', default=False)
+
+    
     
     @api.depends('guest_name')
     def compute_email(self):
@@ -44,6 +50,15 @@ class Booking(models.Model):
         if booking.room_no:
             booking.room_no.room_status = 'occupied' 
         return booking
+    
+    def write(self, vals):
+        res = super(Booking, self).write(vals)
+        for booking in self:
+            if 'is_checked_out' in vals and vals['is_checked_out']:
+                booking.room_no.room_status = 'available'
+            else:
+                booking.room_no.room_status = 'occupied'
+        return res
 
     @api.depends('check_in', 'check_out')
     def compute_duration(self):
@@ -52,3 +67,7 @@ class Booking(models.Model):
                 record.duration = (record.check_out - record.check_in).days
             else:
                 record.duration = 0
+    
+    
+
+
