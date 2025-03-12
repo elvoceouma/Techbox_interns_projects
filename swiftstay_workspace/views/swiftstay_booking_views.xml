@@ -21,7 +21,7 @@
                     <field name="room_no" domain="[('room_status', '=', 'available'), ('room_type_id', '=', name)]"/>
 
                     <field name="price_per_night"/>
-                    <field name="is_checked_out"/>
+                   
 
 
                 </tree>
@@ -46,9 +46,13 @@
                             <field name="check_out"/>
                             <field name="duration"/>
                             <field name="name"/>
-                            <field name="room_no" domain="[('room_status', '=', 'available'), ('room_type_id', '=', name)]"/>
+                            <field name="room_no"/>
                             <field name="price_per_night"/>
-                            <field name="is_checked_out"/>
+                            <xpath expr="//group//field[@name='state']" position="replace">
+                                <field name="state" widget="statusbar" statusbar_visible="occupied, checked-out"/>
+                            </xpath>
+
+
 
 
 

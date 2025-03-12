@@ -23,6 +23,10 @@ class Booking(models.Model):
 
     price_per_night = fields.Float(related='room_no.price_per_night', string="Price Per Night (Ksh.)", store=True)
     is_checked_out = fields.Boolean(string='Checked Out?', default=False)
+    state = fields.Selection([
+        ('occupied', 'Occupied'),
+        ('checked_out', 'Checked Out')
+    ], string='Status', default='occupied')
 
     
     
