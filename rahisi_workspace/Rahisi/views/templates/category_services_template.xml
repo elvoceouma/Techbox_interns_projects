@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="category_services_template" name="Category Services">
+        <t t-call="website.layout">
+            <div class="container py-5">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/rahisi/categories">Categories</a></li>
+                        <li class="breadcrumb-item active" aria-current="page"><t t-esc="category.name"/></li>
+                    </ol>
+                </nav>
+                
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <h1><t t-esc="category.name"/></h1>
+                        <p><t t-esc="category.description or ''"/></p>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <t t-foreach="services" t-as="service">
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <t t-if="service.image">
+                                    <img class="card-img-top" t-att-src="'/web/image/rahisi.service/%s/image' % service.id" alt="Service Image"/>
+                                </t>
+                                <t t-else="">
+                                    <img class="card-img-top" src="/rahisi/static/img/default_service.png" alt="Default Service Image"/>
+                                </t>
+                                <div class="card-body">
+                                    <h5 class="card-title"><t t-esc="service.name"/></h5>
+                                    <p class="card-text"><t t-esc="service.short_description or ''"/></p>
+                                    <p class="card-text text-primary font-weight-bold">
+                                        <t t-esc="service.currency_id.symbol"/> <t t-esc="'%.2f' % service.price"/> 
+                                        <span t-if="service.price_unit"> / <t t-esc="service.price_unit"/></span>
+                                    </p>
+                                </div>
+                                <div class="card-footer bg-white d-flex justify-content-between">
+                                    <a t-att-href="'/rahisi/service/%s' % service.id" class="btn btn-outline-primary">View Details</a>
+                                    <a t-att-href="'/rahisi/book/%s' % service.id" class="btn btn-primary">Book Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+                <t t-if="not services">
+                    <div class="alert alert-info text-center">
+                        <h4>No services available in this category</h4>
+                        <p>Please check back later or explore other categories.</p>
+                        <a href="/rahisi/categories" class="btn btn-primary mt-3">Back to Categories</a>
+                    </div>
+                </t>
+            </div>
+        </t>
+    </template>
+</odoo>

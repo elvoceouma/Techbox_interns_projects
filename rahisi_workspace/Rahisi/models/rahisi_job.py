@@ -59,11 +59,27 @@ class RahisiJob(models.Model):
             if customer and customer.address_id:
                 vals['location_id'] = customer.address_id.id
         
-        # initial state
+        # Initial state
         if not vals.get('state'):
             vals['state'] = 'requested'
         
         res = super(RahisiJob, self).create(vals)
+
+        # Check if provider already has an active job
+        if res.provider_id:
+            active_job = self.search([
+                ('provider_id', '=', res.provider_id.id),
+                ('state', 'in', ['accepted', 'in_progress']),
+                ('id', '!=', res.id)
+            ], limit=1)
+
+            if active_job and res.state == 'accepted':
+                res.write({'state': 'requested'})
+                res.message_post(
+                    body=_("Provider already has an active job. Job put in requested state."),
+                    partner_ids=[res.customer_id.user_id.partner_id.id]
+                )
+
         # Send notification to provider
         if res.provider_id and res.provider_id.user_id:
             res.message_subscribe(partner_ids=[res.provider_id.user_id.partner_id.id])
@@ -77,13 +93,11 @@ class RahisiJob(models.Model):
     def _compute_transportation_cost(self):
         for job in self:
             if job.provider_id and job.provider_id.address_id and job.location_id:
-                # Get transportation config
                 config = self.env['rahisi.transportation.config'].search([], limit=1)
                 if not config:
                     job.transportation_cost = 0.0
                     continue
             
-                # Currently using a simple calculation (as a placeholder)
                 distance = self._calculate_distance(
                     job.provider_id.address_id.partner_latitude or 0.0,
                     job.provider_id.address_id.partner_longitude or 0.0,
@@ -91,25 +105,15 @@ class RahisiJob(models.Model):
                     job.location_id.partner_longitude or 0.0
                 )
                 
-                # Calculate cost
                 job.transportation_cost = config.base_fee + (distance * config.cost_per_km)
             else:
                 job.transportation_cost = 0.0
 
     def _calculate_distance(self, lat1, lon1, lat2, lon2):
-        """
-        Calculate the distance between two points (in kilometers)
-        using the Haversine formula
-        """
-        # This is a placeholder for actual distance calculation
-        # Should use Google Maps API
         if not all([lat1, lon1, lat2, lon2]):
             return 5.0  # Default 5km if coordinates not available
         
-        # Convert decimal degrees to radians
         lat1, lon1, lat2, lon2 = map(radians, [lat1, lon1, lat2, lon2])
-        
-        # Haversine formula
         dlon = lon2 - lon1
         dlat = lat2 - lat1
         a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
@@ -122,19 +126,23 @@ class RahisiJob(models.Model):
         for job in self:
             job.total_price = job.service_price + job.transportation_cost
 
-    def action_request(self):
-        self.write({'state': 'requested'})
-        # Send notification to provider
-        if self.provider_id and self.provider_id.user_id:
+    def action_accept(self):
+        active_job = self.search([
+            ('provider_id', '=', self.provider_id.id),
+            ('state', 'in', ['accepted', 'in_progress']),
+            ('id', '!=', self.id)
+        ], limit=1)
+
+        if active_job:
             self.message_post(
-                body=_("Job request submitted"),
+                body=_("Cannot accept this job because you already have an active job: %s") % active_job.name,
                 partner_ids=[self.provider_id.user_id.partner_id.id]
             )
-        return True
+            return False
 
-    def action_accept(self):
         self.write({'state': 'accepted'})
-        # Send notification to customer
+        self.provider_id.write({'availability': 'busy'})
+
         if self.customer_id and self.customer_id.user_id:
             self.message_post(
                 body=_("Job request accepted by %s") % self.provider_id.name,
@@ -144,7 +152,7 @@ class RahisiJob(models.Model):
 
     def action_reject(self):
         self.write({'state': 'rejected'})
-        # Send notification to customer
+        
         if self.customer_id and self.customer_id.user_id:
             self.message_post(
                 body=_("Job request rejected by %s") % self.provider_id.name,
@@ -154,7 +162,7 @@ class RahisiJob(models.Model):
 
     def action_start(self):
         self.write({'state': 'in_progress'})
-        # Send notification to customer
+        
         if self.customer_id and self.customer_id.user_id:
             self.message_post(
                 body=_("Job started by %s") % self.provider_id.name,
@@ -164,7 +172,8 @@ class RahisiJob(models.Model):
 
     def action_complete(self):
         self.write({'state': 'completed'})
-        # Send notification to customer
+        self.provider_id.write({'availability': 'available'})
+
         if self.customer_id and self.customer_id.user_id:
             self.message_post(
                 body=_("Job completed by %s. Please provide a review.") % self.provider_id.name,
@@ -176,7 +185,7 @@ class RahisiJob(models.Model):
         if self.state in ['completed', 'cancelled']:
             raise UserError(_("Cannot cancel a completed or already cancelled job."))
         self.write({'state': 'cancelled'})
-        # Send notification to both parties
+
         partners = []
         if self.customer_id and self.customer_id.user_id:
             partners.append(self.customer_id.user_id.partner_id.id)
@@ -195,18 +204,16 @@ class RahisiJob(models.Model):
             raise UserError(_("You can only review completed jobs."))
         if self.review_id:
             raise UserError(_("A review already exists for this job."))
-        
-        # Create an empty review
+
         review = self.env['rahisi.review'].create({
             'job_id': self.id,
             'customer_id': self.customer_id.id,
             'provider_id': self.provider_id.id,
             'date': fields.Date.today(),
         })
-        
+
         self.write({'review_id': review.id})
-        
-        # Open the review form
+
         return {
             'type': 'ir.actions.act_window',
             'res_model': 'rahisi.review',

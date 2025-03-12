@@ -36,29 +36,29 @@
                                 string="Accept"
                                 type="object"
                                 class="oe_highlight"
-                                groups="rahisi.group_rahisi_service_provider"
+                                
                                 invisible="state != 'requested'"/>
                         <button name="action_reject"
                                 string="Reject"
                                 type="object"
-                                groups="rahisi.group_rahisi_service_provider"
+                                
                                 invisible="state != 'requested'"/>
                         <button name="action_start"
                                 string="Start Job"
                                 type="object"
                                 class="oe_highlight"
-                                groups="rahisi.group_rahisi_service_provider"
+                                
                                 invisible="state != 'accepted'"/>
                         <button name="action_complete"
                                 string="Complete"
                                 type="object"
                                 class="oe_highlight"
-                                groups="rahisi.group_rahisi_service_provider"
+                                
                                 invisible="state != 'in_progress'"/>
                         <button name="action_cancel"
                                 string="Cancel"
                                 type="object"
-                                groups="rahisi.group_rahisi_customer,rahisi.group_rahisi_service_provider"
+                                
                                 invisible="state in ['completed', 'cancelled', 'rejected']"/>
                         <field name="state" widget="statusbar"
                                statusbar_visible="draft,requested,accepted,in_progress,completed"/>
@@ -98,7 +98,7 @@
                                             string="Add Review"
                                             type="object"
                                             class="oe_highlight"
-                                            groups="rahisi.group_rahisi_customer"/>
+                                            />
                                 </group>
                                 <field name="review_id" invisible="review_id == False" readonly="1"/>
                             </page>

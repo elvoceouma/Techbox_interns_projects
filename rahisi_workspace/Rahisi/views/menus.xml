@@ -1,28 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-<!--Menus-->
-<menuitem id= "menu_root" name="Rahisi" sequence="10" />
-<menuitem id="menu_rahisi" name="Rahisi" parent="menu_root" action="action_rahisi_dashboard" sequence="1" groups="base.group_user"/>
-<menuitem id="menu_rahisi_service_category" name="Service Categories" parent="menu_root" action="action_rahisi_service_category" sequence="2" groups="base.group_user"/>
+    <!-- Root Menu -->
+    <menuitem id="menu_root" name="Rahisi" sequence="10"/>
+    
+    <!-- Dashboard Menu -->
+    <menuitem id="menu_rahisi" name="Dashboard" parent="menu_root" action="action_rahisi_dashboard" sequence="1" />
+    
+    <!-- Service Categories - Admin Only -->
+    <menuitem id="menu_rahisi_service_category" name="Service Categories" parent="menu_root" action="action_rahisi_service_category" sequence="2"/>
 
-<!-- Service Management -->
-<menuitem id="menu_service_management" name="Service Management" parent="menu_root" sequence="10" groups="base.group_user"/>
-<menuitem id="menu_rahisi_service" name="Services" parent="menu_service_management" action="action_rahisi_service" sequence="1" groups="base.group_user"/>
-<menuitem id="menu_rahisi_service_provider" name="Service Providers" parent="menu_service_management" action="action_rahisi_service_provider" sequence="2" groups="base.group_user"/>
+    <!-- Service Management - Admin and Provider -->
+    <menuitem id="menu_service_management" name="Service Management" parent="menu_root" sequence="10"/>
+    <menuitem id="menu_rahisi_service" name="Services" parent="menu_service_management" action="action_rahisi_service" sequence="1" />
+    <menuitem id="menu_rahisi_service_provider" name="Service Providers" parent="menu_service_management" action="action_rahisi_service_provider" sequence="2" />
 
-<!-- Customer Management -->
-<menuitem id="menu_customer_management" name="Customer Management" parent="menu_root" sequence="20" groups="base.group_user"/>
-<menuitem id="menu_rahisi_customer" name="Customers" parent="menu_customer_management" action="action_rahisi_customer" sequence="1" groups="base.group_user"/>
+    <!-- Customer Management - Admin Only -->
+    <menuitem id="menu_customer_management" name="Customer Management" parent="menu_root" sequence="20" />
+    <menuitem id="menu_rahisi_customer" name="Customers" parent="menu_customer_management" action="action_rahisi_customer" sequence="1" />
 
-<!-- Job Operations -->
-<menuitem id="menu_job_operations" name="Job Operations" parent="menu_root" sequence="30" groups="base.group_user"/>
-<menuitem id="menu_rahisi_job" name="Jobs" parent="menu_job_operations" action="action_rahisi_job" sequence="1" groups="base.group_user"/>
-<menuitem id="menu_rahisi_review" name="Reviews" parent="menu_job_operations" action="action_rahisi_review" sequence="2" groups="base.group_user"/>
+    <!-- Customer Dashboard - Customer Only -->
+    <menuitem id="menu_rahisi_customer_app" name="Customer Portal" parent="menu_rahisi" sequence="10" />
+    <menuitem id="menu_rahisi_browse_services" name="Browse Services" parent="menu_rahisi_customer_app" action="rahisi.action_rahisi_browse_services" sequence="10"/>
+    <menuitem id="menu_rahisi_my_jobs" name="My Jobs" parent="menu_rahisi_customer_app" action="action_rahisi_customer_jobs" sequence="20"/>
 
-<!-- Configuration -->
-<menuitem id="menu_rahisi_configuration" name="Configuration" parent="menu_root" sequence="100" groups="base.group_system"/>
-<menuitem id="menu_rahisi_transportation_config" name="Transportation Cost" parent="menu_rahisi_configuration" action="action_rahisi_transportation_config" sequence="1" groups="base.group_system"/>
+    <!-- Job Operations - Admin Only -->
+    <menuitem id="menu_job_operations" name="Job Operations" parent="menu_root" sequence="30" />
+    <menuitem id="menu_rahisi_job" name="All Jobs" parent="menu_job_operations" action="action_rahisi_job" sequence="1" />
+    <menuitem id="menu_rahisi_review" name="Reviews" parent="menu_job_operations" action="action_rahisi_review" sequence="2" />
+
+    <!-- Provider Dashboard - Provider Only -->
+    <menuitem id="menu_rahisi_provider_app" name="Provider Portal" parent="menu_rahisi" sequence="20" />
+    <menuitem id="menu_rahisi_job_requests" name="Job Requests" parent="menu_rahisi_provider_app" action="action_rahisi_provider_job_requests" sequence="10"/>
+    <menuitem id="menu_rahisi_active_jobs" name="Active Jobs" parent="menu_rahisi_provider_app" action="action_rahisi_provider_active_jobs" sequence="20"/>
+    <menuitem id="menu_rahisi_completed_jobs" name="Completed Jobs" parent="menu_rahisi_provider_app" action="action_rahisi_provider_completed_jobs" sequence="30"/>
+
+    <!-- Configuration - Admin Only -->
+    <menuitem id="menu_rahisi_configuration" name="Configuration" parent="menu_root" sequence="100" />
+    <menuitem id="menu_rahisi_transportation_config" name="Transportation Cost" parent="menu_rahisi_configuration" action="action_rahisi_transportation_config" sequence="1" />
 
 </odoo>
-
