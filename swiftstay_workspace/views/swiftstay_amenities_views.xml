@@ -10,6 +10,7 @@
             <field name="arch" type="xml">
                 <tree string= "Amenities">
                     <field name="name"/>
+                    <field name="colour"/>
 
                 </tree>
             </field>
@@ -25,7 +26,8 @@
                     <sheet>
                         <group>
                             <field name="name"/>
-
+                            <field name="colour" widget="color_picker"/>
+                             
 
                         </group>
                     </sheet>
@@ -74,6 +76,7 @@
             <field name="arch" type="xml">
                 <kanban class="o_kanban_mobile">
                     <field name="name"/>
+                    <field name="colour"/>
 
 
                     <templates>

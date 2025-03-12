@@ -10,7 +10,7 @@
             <field name="arch" type="xml">
                 <tree string= "Room Types">
                     <field name="name"/>
-                    <field name="amenity_ids" widget="many2many_tags"/>
+                    <field name="amenity_ids" widget="many2many_tags" options="{'color_field': 'colour'}"/>
                     <field name="price_per_night"/>
 
                 </tree>
@@ -27,7 +27,7 @@
                     <sheet>
                         <group>
                             <field name="name"/>
-                            <field name="amenity_ids"/>
+                            <field name="amenity_ids" options="{'color_field': 'colour'}"/>
                             <field name="price_per_night"/>
 
 
@@ -41,6 +41,8 @@
                 </form>
             </field>
         </record>
+
+        <!-- Search View -->
         <record id="view_swiftstay_room_types_search" model="ir.ui.view">
             <field name="name">swiftstay.room.types.search</field>
             <field name="model">swiftstay.roomtypes</field>
@@ -48,7 +50,7 @@
                 <search>
                     <field name="name"/>
                     <field name="price_per_night"/>
-                    <field name="amenity_ids"/>
+                    <field name="amenity_ids" options="{'color_field': 'colour'}"/>
 
                     <filter string="Low Price" name="low_price" domain="[('price_per_night', '&lt;', 15000)]"/>
                     <filter string="High Price" name="high_price" domain="[('price_per_night', '&gt;', 20000)]"/>
@@ -62,6 +64,7 @@
             </field>
         </record>
 
+ <!-- Kanban View -->
         <record id="view_swiftstay_room_types_kanban" model="ir.ui.view">
             <field name="name">swiftstay.room.types.kanban</field>
             <field name="model">swiftstay.roomtypes</field>
@@ -69,7 +72,7 @@
                 <kanban class="o_kanban_mobile">
                     <field name="name"/>
                     <field name="price_per_night"/>
-                    <field name="amenity_ids" widget="many2many_tags"/>
+                    <field name="amenity_ids" widget="many2many_tags" options="{'color_field': 'colour'}"/>
 
 
                     <templates>
@@ -81,7 +84,7 @@
                                         </li>
                                         <li>Price Per Night: <field name="price_per_night"/>
                                         </li>
-                                         <li>Amenities: <field name="amenity_ids" widget="many2many_tags"/>
+                                         <li>Amenities: <field name="amenity_ids" widget="many2many_tags" options="{'color_field': 'colour'}"/>
                                         </li>
 
                                     </ul>

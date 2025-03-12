@@ -1,5 +1,6 @@
 from odoo import models, fields, api
 
+
 class Booking(models.Model):
     _name = 'swiftstay.booking'
     _description = 'Booking Model'
