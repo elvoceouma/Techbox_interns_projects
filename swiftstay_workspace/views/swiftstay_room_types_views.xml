@@ -12,6 +12,7 @@
                     <field name="name"/>
                     <field name="amenity_ids" widget="many2many_tags" options="{'color_field': 'colour'}"/>
                     <field name="price_per_night"/>
+                    <field name="roomtype_colour"/>
 
                 </tree>
             </field>
@@ -29,6 +30,7 @@
                             <field name="name"/>
                             <field name="amenity_ids" options="{'color_field': 'colour'}"/>
                             <field name="price_per_night"/>
+                            <field name="roomtype_colour" widget="color_picker"/>
 
 
                         </group>
@@ -73,6 +75,7 @@
                     <field name="name"/>
                     <field name="price_per_night"/>
                     <field name="amenity_ids" widget="many2many_tags" options="{'color_field': 'colour'}"/>
+                    <field name="roomtype_colour"/>
 
 
                     <templates>

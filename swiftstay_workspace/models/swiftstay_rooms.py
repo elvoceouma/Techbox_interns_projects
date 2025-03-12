@@ -24,6 +24,7 @@ class Rooms(models.Model):
     attachment=True, 
     tracking=True
 )
+    room_colour = fields.Integer(string="Colour", required=True, tracking=True)
     
 
 
