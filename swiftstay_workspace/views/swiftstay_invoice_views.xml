@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Tree View -->
+        <record id="view_swiftstay_invoice_tree" model="ir.ui.view">
+            <field name="name">swiftstay.invoice.tree</field>
+            <field name="model">swiftstay.invoice</field>
+            <field name="arch" type="xml">
+                <tree string="Invoices">
+                    <field name="booking_id"/>
+                    <field name="id_no"/>
+                    <field name="passport_no"/>
+                    <field name="email"/>
+                    <field name="phone_no"/>
+                    <!-- <field name="room_id"/> -->
+                    <field name="room_type_id"/>
+                    <field name="check_in"/>
+                    <field name="check_out"/>
+                    <field name="duration"/>
+                    <field name="price_per_night"/>
+                    <field name="total_amount"/>
+                    <field name="payment_method"/>
+                    <field name="status"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_swiftstay_invoice_form" model="ir.ui.view">
+            <field name="name">swiftstay.invoice.form</field>
+            <field name="model">swiftstay.invoice</field>
+            <field name="arch" type="xml">
+                <form string="Invoice">
+                    <sheet>
+                        <group>
+                            <field name="booking_id"/>
+                            <field name="id_no"/>
+                            <field name="passport_no"/>
+                            <field name="email"/>
+                            <field name="phone_no"/>
+                            <!-- <field name="room_id"/> -->
+                            <field name="room_type_id"/>
+                            <field name="check_in"/>
+                            <field name="check_out"/>
+                            <field name="duration"/>
+                            <field name="price_per_night"/>
+                            <field name="total_amount"/>
+                            <field name="payment_method"/>
+                            <field name="status"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+
+        <!-- Form View -->
+        <record id="view_swiftstay_invoice_kanban" model="ir.ui.view">
+            <field name="name">swiftstay.invoice.kanban</field>
+            <field name="model">swiftstay.invoice</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile" sample="1" default_group_by="status">
+                    <field name="booking_id"/>
+                    <field name="id_no"/>
+                    <field name="passport_no"/>
+                    <field name="email"/>
+                    <field name="phone_no"/>
+                    <!-- <field name="room_id"/> -->
+                    <field name="room_type_id"/>
+                    <field name="check_in"/>
+                    <field name="check_out"/>
+                    <field name="duration"/>
+                    <field name="price_per_night"/>
+                    <field name="total_amount"/>
+                    <field name="payment_method"/>
+                    <field name="status"/>
+
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="oe_kanban_details">
+                                    <ul>
+                                        <li>Guest Name: <field name="booking_id"/>
+                                        </li>
+                                        <li>ID No: <field name="id_no"/>
+                                        </li>
+                                        <li>Passport No: <field name="passport_no"/>
+                                        </li>
+                                        <li>Email: <field name="email"/>
+                                        </li>
+                                        <li>Phone: <field name="phone_no"/>
+                                        </li>
+                                        <!-- <li>Room: <field name="room_id"/>
+                                        </li> -->
+                                        <li>Room Type: <field name="room_type_id"/>
+                                        </li>
+                                        <li>Check-in: <field name="check_in"/>
+                                        </li>
+                                        <li>Check-out: <field name="check_out"/>
+                                        </li>
+                                        <li>Duration: <field name="duration"/>
+                                        </li>
+                                        <li>Price/Night: <field name="price_per_night"/>
+                                        </li>
+                                        <li>Total: <field name="total_amount"/>
+                                        </li>
+                                        <li>Payment: <field name="payment_method"/>
+                                        </li>
+                                        <li>Status: <field name="status"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="view_swiftstay_invoice_search" model="ir.ui.view">
+            <field name="name">swiftstay.invoice.search</field>
+            <field name="model">swiftstay.invoice</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="booking_id"/>
+                    <field name="status"/>
+                    <field name="email"/>
+                    <field name="phone_no"/>
+        
+
+                    <filter string="Paid Invoices" name="paid" domain="[('status', '=', 'paid')]"/>
+                    <filter string="Unpaid Invoices" name="unpaid" domain="[('status', '=', 'unpaid')]"/>
+
+
+                    <group expand="0" string="Group By">
+                        <filter string="Payment Status" name="group_by_payment_status" context="{'group_by': 'status'}"/>
+                        <filter string="Payment Method" name="group_by_payment_method" context="{'group_by': 'payment_method'}"/>
+                        <filter string="Room Type" name="group_by_room_type" context="{'group_by': 'room_type_id'}"/>
+                    </group>
+
+
+                </search>
+            </field>
+        </record>
+
+        <record id="action_swiftstay_invoice" model="ir.actions.act_window">
+            <field name="name">Invoice</field>
+            <field name="res_model">swiftstay.invoice</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="search_view_id" ref="view_swiftstay_invoice_search"/>
+
+        </record>
+
+
+    </data>
+</odoo>
