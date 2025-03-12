@@ -20,7 +20,7 @@
                     <field name="check_out"/>
                     <field name="duration"/>
                     <field name="name"/>
-                    <field name="room_no" domain="[('room_status', '=', 'available'), ('room_type_id', '=', name)]"/>
+                    <field name="room_no"/>
 
                     <field name="price_per_night"/>
 
