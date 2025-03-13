@@ -16,6 +16,7 @@
                     <field name="price_per_night"/>
                     <field name="room_status"/>
                     <field name="room_image" widget="image"/>
+                    <field name="room_colour"/>
                 </tree>
             </field>
         </record>
@@ -40,6 +41,7 @@
                             <field name="floor_number"/>
                             <field name="price_per_night"/>
                             <field name="room_image" widget="image"/>
+                            <field name="room_colour" widget="color_picker"/>
 
                         </group>
                     </sheet>
@@ -62,6 +64,7 @@
                     <field name="name"/>
                     <field name="room_type_id"/>
                     <field name="room_status"/>
+                    <field name="room_colour"/>
                 
 
 

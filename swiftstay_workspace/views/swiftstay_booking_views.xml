@@ -19,8 +19,8 @@
                     <field name="check_in"/>
                     <field name="check_out"/>
                     <field name="duration"/>
-                    <field name="name"/>
-                    <field name="room_no" domain="[('room_status', '=', 'available'), ('room_type_id', '=', name)]"/>
+                    <field name="name" widget="many2many_tags" options="{'color_field': 'roomtype_colour'}"/>
+                    <field name="room_no" widget="many2many_tags" options="{'color_field': 'room_colour'}"/>
 
                     <field name="price_per_night"/>
 
@@ -38,7 +38,7 @@
             <field name="arch" type="xml">
                 <form string="Booking">
                     <header>
-                        <button name="action_confirm" string="Check Out" class="oe_highlight" type="object"/>
+                        <button name="action_confirm" string="Check Out" class="oe_highlight" type="object" confirm="Are you certain you want to proceed with checking out this guest?"/>
                         <field name="state" widget="statusbar"/>
                     </header>
                     <sheet>
@@ -52,8 +52,8 @@
                             <field name="check_in"/>
                             <field name="check_out"/>
                             <field name="duration"/>
-                            <field name="name" widget="many2many_tags"/>
-                            <field name="room_no" widget="many2many_tags"/>
+                            <field name="name" widget="many2many_tags" options="{'color_field': 'roomtype_colour'}"/>
+                            <field name="room_no" widget="many2many_tags" options="{'color_field': 'room_colour'}"/>
                             <field name="price_per_night"/>
 
                         </group>
@@ -80,7 +80,7 @@
                     <field name="check_in"/>
                     <field name="check_out"/>
 
-                    <field name="room_no"/>
+                    <field name="room_no" options="{'color_field': 'room_colour'}"/>
 
 
 
@@ -98,7 +98,7 @@
                                         <li>Check-out: <field name="check_out"/>
                                         </li>
 
-                                        <li>Room Number: <field name="room_no"/>
+                                        <li>Room Number: <field name="room_no" options="{'color_field': 'room_colour'}"/>
                                         </li>
 
 

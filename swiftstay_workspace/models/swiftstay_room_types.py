@@ -9,3 +9,4 @@ class RoomTypes(models.Model):
     amenity_ids = fields.Many2many('swiftstay.amenities', string='Amenities', tracking=True)
     room_ids = fields.One2many('swiftstay.rooms', 'room_type_id', string='Rooms')
     price_per_night = fields.Float(string='Price per Night (Ksh.)', required=True, tracking=True)
+    roomtype_colour = fields.Integer(string="Colour", required=True, tracking=True)
