@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="provider_dashboard_template" name="Service Provider Dashboard">
+        <t t-call="website.layout">
+            <div class="container py-5">
+                <h1>Service Provider Dashboard</h1>
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        <div class="card mb-4">
+                            <div class="card-body text-center">
+                                <t t-if="provider.image">
+                                    <img class="rounded-circle mb-3" width="100" height="100" t-att-src="'/web/image/rahisi.service.provider/%s/image' % provider.id" alt="Provider Image"/>
+                                </t>
+                                <t t-else="">
+                                    <img class="rounded-circle mb-3" width="100" height="100" src="/rahisi/static/img/default_provider.png" alt="Default Provider Image"/>
+                                </t>
+                                <h4 class="card-title mb-0"><t t-esc="provider.name"/></h4>
+                                <div class="text-muted mb-3">
+                                    <t t-if="provider.rating and provider.rating > 0">
+                                        <span class="text-warning">★</span> <t t-esc="'%.1f' % provider.rating"/> 
+                                        (<t t-esc="provider.rating_count"/> reviews)
+                                    </t>
+                                    <t t-else="">
+                                        <span class="text-muted">No ratings yet</span>
+                                    </t>
+                                </div>
+                                <a href="/rahisi/provider/profile/edit" class="btn btn-sm btn-outline-primary">Edit Profile</a>
+                            </div>
+                            <div class="list-group list-group-flush">
+                                <a href="/rahisi/provider/dashboard" class="list-group-item list-group-item-action active">Dashboard</a>
+                                <a href="/rahisi/provider/services" class="list-group-item list-group-item-action">My Services</a>
+                                <a href="/rahisi/provider/jobs" class="list-group-item list-group-item-action">All Jobs</a>
+                                <a href="/rahisi/provider/earnings" class="list-group-item list-group-item-action">Earnings</a>
+                                <a href="/rahisi/provider/reviews" class="list-group-item list-group-item-action">Reviews</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-9">
+                        <!-- Job Requests Section -->
+                        <div class="card mb-4">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">New Job Requests</h5>
+                                <span class="badge badge-primary"><t t-esc="len(requested_jobs)"/></span>
+                            </div>
+                            <div class="card-body p-0">
+                                <t t-if="requested_jobs">
+                                    <div class="list-group list-group-flush">
+                                        <t t-foreach="requested_jobs" t-as="job">
+                                            <div class="list-group-item list-group-item-action">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <h5 class="mb-1"><t t-esc="job.service_id.name"/></h5>
+                                                        <p class="mb-1">
+                                                            <strong>Customer:</strong> <t t-esc="job.customer_id.name"/><br/>
+                                                            <strong>Date:</strong> <t t-esc="job.date"/> at <t t-esc="'%d:00' % int(job.time)"/> 
+                                                            <t t-if="job.time &lt; 12">AM</t><t t-else="">PM</t><br/>
+                                                            <strong>Location:</strong> <t t-esc="job.location_id.city or ''"/>
+                                                        </p>
+                                                        <small class="text-muted">Requested on <t t-esc="job.create_date.strftime('%Y-%m-%d')"/></small>
+                                                    </div>
+                                                    <div>
+                                                        <a t-att-href="'/rahisi/provider/job/%s/details' % job.id" class="btn btn-sm btn-outline-primary mb-2">View Details</a>
+                                                        <div class="btn-group d-block">
+                                                            <a t-att-href="'/rahisi/provider/job/%s/accept' % job.id" class="btn btn-sm btn-success">Accept</a>
+                                                            <a t-att-href="'/rahisi/provider/job/%s/decline' % job.id" class="btn btn-sm btn-danger">Decline</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </t>
+                                <t t-else="">
+                                    <div class="text-center py-4">
+                                        <p class="text-muted mb-0">No new job requests at the moment</p>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                        
+                        <!-- Active Job Section -->
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h5 class="mb-0">Current Active Job</h5>
+                            </div>
+                            <div class="card-body">
+                                <t t-if="active_job">
+                                    <div class="card border-primary">
+                                        <div class="card-body">
+                                            <h5 class="card-title"><t t-esc="active_job.service_id.name"/></h5>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <p>
+                                                        <strong>Customer:</strong> <t t-esc="active_job.customer_id.name"/><br/>
+                                                        <strong>Phone:</strong> <t t-esc="active_job.customer_id.phone or 'N/A'"/><br/>
+                                                        <strong>Date:</strong> <t t-esc="active_job.date"/> at <t t-esc="'%d:00' % int(active_job.time)"/> 
+                                                        <t t-if="active_job.time &lt; 12">AM</t><t t-else="">PM</t><br/>
+                                                    </p>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>
+                                                        <strong>Status:</strong> 
+                                                        <span t-if="active_job.state == 'accepted'" class="badge badge-info">Accepted</span>
+                                                        <span t-if="active_job.state == 'in_progress'" class="badge badge-warning">In Progress</span><br/>
+                                                        <strong>Price:</strong> <t t-esc="active_job.service_id.currency_id.symbol"/> <t t-esc="'%.2f' % active_job.service_id.price"/><br/>
+                                                        <strong>Location:</strong> <t t-esc="active_job.location_id.city or ''"/>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="mt-3">
+                                                <p><strong>Description:</strong></p>
+                                                <p><t t-esc="active_job.description or 'No additional details provided.'" /></p>
+                                            </div>
+                                            <div class="mt-3">
+                                                <a t-att-href="'/rahisi/provider/job/%s/details' % active_job.id" class="btn btn-outline-primary">View Details</a>
+                                                <t t-if="active_job.state == 'accepted'">
+                                                    <a t-att-href="'/rahisi/provider/job/%s/start' % active_job.id" class="btn btn-warning">Start Job</a>
+                                                </t>
+                                                <t t-if="active_job.state == 'in_progress'">
+                                                    <a t-att-href="'/rahisi/provider/job/%s/complete' % active_job.id" class="btn btn-success">Complete Job</a>
+                                                </t>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </t>
+                                <t t-else="">
+                                    <div class="text-center py-2">
+                                        <p class="text-muted mb-0">No active jobs at the moment</p>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                        
+                        <!-- Recently Completed Jobs Section -->
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Recently Completed Jobs</h5>
+                                <a href="/rahisi/provider/jobs" class="btn btn-sm btn-outline-primary">View All</a>
+                            </div>
+                            <div class="card-body p-0">
+                                <t t-if="completed_jobs">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Service</th>
+                                                    <th>Customer</th>
+                                                    <th>Date</th>
+                                                    <th>Amount</th>
+                                                    <th>Rating</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <t t-foreach="completed_jobs" t-as="job">
+                                                    <tr>
+                                                        <td><t t-esc="job.service_id.name"/></td>
+                                                        <td><t t-esc="job.customer_id.name"/></td>
+                                                        <td><t t-esc="job.date"/></td>
+                                                        <td><t t-esc="job.service_id.currency_id.symbol"/> <t t-esc="'%.2f' % job.service_id.price"/></td>
+                                                        <td>
+                                                            <t t-if="job.rating and job.rating > 0">
+                                                                <span class="text-warning">★</span> <t t-esc="job.rating"/>
+                                                            </t>
+                                                            <t t-else="">
+                                                                <span class="text-muted">No rating</span>
+                                                            </t>
+                                                        </td>
+                                                        <td>
+                                                            <a t-att-href="'/rahisi/provider/job/%s/details' % job.id" class="btn btn-sm btn-outline-primary">View</a>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </t>
+                                <t t-else="">
+                                    <div class="text-center py-4">
+                                        <p class="text-muted mb-0">No completed jobs yet</p>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>
