@@ -1,25 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-<!--         
-        <record id="view_rahisi_customer_search" model="ir.ui.view">
-            <field name="name">rahisi.customer.search</field>
-            <field name="model">rahisi.customer</field>
-            <field name="arch" type="xml">
-                <search>
-                    <field name="name"/>
-                    <field name="email"/>
-                    <field name="phone"/>
-                    <separator/>
-                    <filter string="Active" name="active" domain="[('active','=',True)]"/>
-                    <filter string="Inactive" name="inactive" domain="[('active','=',False)]"/>
-                    <group expand="0" string="Group By">
-                        <filter name="group_by_active" string="Status" context="{'group_by': 'active'}"/>
-                    </group>
-                </search>
-            </field>
-        </record> -->
-
         <!-- TREE VIEW -->
         <record id="view_rahisi_customer_tree" model="ir.ui.view">
             <field name="name">rahisi.customer.tree</field>
@@ -122,7 +103,6 @@
             <field name="name">Customers</field>
             <field name="res_model">rahisi.customer</field>
             <field name="view_mode">tree,form,kanban</field>
-            <field name="search_view_id" ref="view_rahisi_customer_search"/>
             <field name="context">{'search_default_active': 1}</field>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
