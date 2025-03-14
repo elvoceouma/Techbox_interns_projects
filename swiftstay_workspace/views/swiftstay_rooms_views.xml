@@ -16,7 +16,7 @@
                     <field name="price_per_night"/>
                     <field name="room_status"/>
                     <field name="room_image" widget="image"/>
-                    <field name="room_colour"/>
+                  
                 </tree>
             </field>
         </record>
