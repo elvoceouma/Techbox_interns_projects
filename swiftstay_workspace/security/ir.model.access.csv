@@ -7,9 +7,6 @@ access_swifstay_booking_user,swiftsay.booking,model_swiftstay_booking,swiftstay_
 access_swifstay_booking_officer,swiftsay.booking,model_swiftstay_booking,swiftstay_workspace.group_swiftstay_officer,1,1,1,0
 access_swifstay_booking_admin,swiftsay.booking,model_swiftstay_booking,swiftstay_workspace.group_swiftstay_admin,1,1,1,1
 
-access_swifstay_invoice_user,swiftsay.invoice,model_swiftstay_invoice,swiftstay_workspace.group_swiftstay_user,1,0,0,0
-access_swifstay_invoice_officer,swiftsay.invoice,model_swiftstay_invoice,swiftstay_workspace.group_swiftstay_officer,1,1,1,0
-access_swifstay_invoice_admin,swiftsay.invoice,model_swiftstay_invoice,swiftstay_workspace.group_swiftstay_admin,1,1,1,1
 
 access_swifstay_roomtypes_user,swiftsay.roomtypes,model_swiftstay_roomtypes,swiftstay_workspace.group_swiftstay_user,1,0,0,0
 access_swifstay_roomtypes_officer,swiftsay.roomtypes,model_swiftstay_roomtypes,swiftstay_workspace.group_swiftstay_officer,1,1,1,0
