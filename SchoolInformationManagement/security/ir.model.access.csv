@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_learner,learner.learner,model_learner_learner,base.group_user,1,1,1,1
+access_teacher, teacher.teacher,model_teacher_teacher,base.group_user,1,1,1,1
+access_subjects, subjects.subjects,model_subjects_subjects,base.group_user,1,1,1,1
+access_parents, parents.parents,model_parents_parents,base.group_user,1,1,1,1

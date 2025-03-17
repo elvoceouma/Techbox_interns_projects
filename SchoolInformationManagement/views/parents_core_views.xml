@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!--Parents Parents Views-->
+        <!--Menu Actions-->
+
+        <!--List View-->
+        <record id="view_parents_parents_list" model="ir.ui.view">
+            <field name="name">parents.parents.list</field>
+            <field name="model">parents.parents</field>
+            <field name="arch" type="xml">
+                <tree string= "Parents">
+                    <field name="name"/>
+                    <field name="idnumber"/>
+                    <field name="child's name"/>
+                    <field name="grade"/>
+                    <field name="contact"/>
+                </tree>
+            </field>
+        </record>
+        <!--Form View-->
+        <record id="view_parents_parents_form" model="ir.ui.view">
+            <field name="name">parents.parents.form</field>
+            <field name="model">parents.parents</field>
+            <field name="arch" type="xml">
+                <form string="Parents">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="idnumber"/>
+                            <field name="child's name"/>
+                            <field name="grade"/>
+                            <field name="contact"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+            </record>
+        </data>
+    </odoo>
