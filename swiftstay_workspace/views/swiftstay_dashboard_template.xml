@@ -1,0 +1,45 @@
+<odoo>
+    <template id="user_dashboard" name="User Dashboard - My Bookings">
+        <t t-call="website.layout">
+            <div class="container">
+                <h2 class="mt-4 mb-4">My Bookings</h2>
+                <t t-if="bookings">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Room</th>
+                                <th>Check-In</th>
+                                <th>Check-Out</th>
+                                <th>Guests</th>
+                                <th>Status</th>
+                                <th>Date of Booking</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="bookings" t-as="booking">
+                                <tr>
+                                    <td>
+                                        <t t-foreach="booking.room_no" t-as="room">
+                                            <span t-esc="room.display_name"/>
+                                            <br/>
+                                        </t>
+                                    </td>
+                                    <td><t t-esc="booking.check_in"/></td>
+                                    <td><t t-esc="booking.check_out"/></td>
+                                    <td><t t-esc="booking.no_of_guests"/></td>
+                                    <td><t t-esc="booking.state"/></td>
+                                    <td><t t-esc="booking.create_date.strftime('%Y-%m-%d')"/></td>
+                                </tr>
+                            </t>
+                            
+                        </tbody>
+                    </table>
+                </t>
+                <t t-else="">
+                    <div class="alert alert-info">You have no bookings yet.</div>
+                </t>
+            </div>
+        </t>
+    </template>
+    
+</odoo>

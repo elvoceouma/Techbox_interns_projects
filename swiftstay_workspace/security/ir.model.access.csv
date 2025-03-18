@@ -17,8 +17,4 @@ access_swifstay_rooms_officer,swiftsay.rooms,model_swiftstay_rooms,swiftstay_wor
 access_swifstay_rooms_admin,swiftsay.rooms,model_swiftstay_rooms,swiftstay_workspace.group_swiftstay_admin,1,1,1,1
 
 
-access_swiftstay_invoice_user,account.move,account.model_account_move,swiftstay_workspace.group_swiftstay_user,1,0,0,0
-access_swiftstay_invoice_officer,account.move,account.model_account_move,swiftstay_workspace.group_swiftstay_officer,1,1,1,0
-access_swiftstay_invoice_admin,account.move,account.model_account_move,swiftstay_workspace.group_swiftstay_admin,1,1,1,1
-
 

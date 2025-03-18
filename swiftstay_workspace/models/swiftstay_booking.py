@@ -24,7 +24,8 @@ class Booking(models.Model):
         tracking=True,
         domain="[('room_status', '=', 'available'), ('room_type_id', '=', name)]"
     )
-    price_per_night = fields.Float(string="Total Price Per Night (Ksh.)", compute="compute_total_price", store=True)
+    price_per_night = fields.Float(string="Total Price Per Night (Ksh.)", compute="compute_total_price_per_night", store=True)
+    total_price = fields.Float(string="Total Price (Ksh.)", compute="compute_total_price", store=True)
 
     state = fields.Selection([
         ('available', 'Available'),
@@ -53,10 +54,15 @@ class Booking(models.Model):
                 record.duration = 0
 
     @api.depends('room_no')
-    def compute_total_price(self):
+    def compute_total_price_per_night(self):
         for record in self:
             record.price_per_night = sum(record.room_no.mapped('price_per_night'))
-
+    
+    @api.depends('price_per_night')
+    def compute_total_price(self):
+        for record in self:
+            record.total_price = record.duration * record.price_per_night
+    
     @api.model
     def create(self, vals):
         booking = super(Booking, self).create(vals)
@@ -95,3 +101,5 @@ class Booking(models.Model):
           
             if booking.room_no:
                 booking.room_no.write({'room_status': 'available'})
+
+                

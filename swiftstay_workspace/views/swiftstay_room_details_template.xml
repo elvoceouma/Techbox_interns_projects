@@ -1,0 +1,65 @@
+<odoo>
+    <template id="room_details" name="Available Rooms">
+        <t t-call="website.layout">
+            <div class="oe_structure">
+                <div class="container">
+                    <div class="row">
+                        <h2 class="mt-4 mb-4">Available Rooms</h2>
+                        <form action="/room_booking" method="post">
+                            <t t-foreach="grouped_rooms.items()" t-as="room_group">
+                                <div class="col-12">
+                                    <h4>
+                                        <strong>
+                                            <t t-esc="room_group[0]"/>
+                                        </strong>
+                                    </h4>
+                                    <div class="row">
+                                        <t t-foreach="room_group[1]" t-as="room">
+                                            <div class="col-md-4 mb-4">
+                                                <div class="card" style="width: 100%;">
+                                                    <img t-if="room.room_image" t-attf-src="data:image/png;base64,{{room.room_image}}" class="img-thumbnail" style="width: 100%; height: 200px; object-fit: cover;"/>
+                                                    <div class="card-body">
+                                                        <span>
+                                                            <strong>Room Number: </strong>
+                                                            <t t-esc="room.name.name"/>
+                                                        </span>
+                                                        <br/>
+                                                        <span>
+                                                            <strong>Number of Beds: </strong>
+                                                            <t t-esc="room.num_beds"/>
+                                                        </span>
+                                                        <br/>
+                                                        <span>
+                                                            <strong>Floor: </strong>
+                                                            <t t-esc="room.floor_number"/>
+                                                        </span>
+                                                        <br/>
+                                                        <span>
+                                                            <strong>Price Per Night: </strong>Ksh <t t-esc="room.price_per_night"/>
+                                                        </span>
+                                                        <br/>
+                                                        <input type="checkbox" name="room_ids" t-att-value="room.id" multiple="multiple"/>
+                                                        <label>Select Room</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+                            </t>
+                            <br/>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-sm px-5 py-3">
+                                    <span class="font-weight-bold">Proceed to Booking</span>
+                                </button>
+                            </div>
+
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

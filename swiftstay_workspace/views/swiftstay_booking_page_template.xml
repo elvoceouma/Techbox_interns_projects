@@ -1,0 +1,93 @@
+<odoo>
+    <template id="booking_page">
+        <t t-call="website.layout">
+            <div class="container">
+                <h2 class="mt-4 mb-4">Room Booking</h2>
+
+                <form action="/room_booking/submit" method="post">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label for="guest_name">Name</label>
+                                <input type="text" class="form-control" id="guest_name" name="guest_name" required="required" t-att-value="guest_name"/>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="phone_no">Phone</label>
+                                <input type="text" class="form-control" id="phone_no" name="phone_no" t-att-value="mobile"/>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" required="required" t-att-value="email"/>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="id_no">ID Number</label>
+                                <input type="text" class="form-control" id="id_no" name="id_no" maxlength="8"/>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label for="passport_no">Passport Number</label>
+                                <input type="text" class="form-control" id="passport_no" name="passport_no" maxlength="9"/>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="check_in">Check-in Date</label>
+                                <input type="datetime-local" class="form-control" id="check_in" name="check_in" required="required"/>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="check_out">Check-out Date</label>
+                                <input type="datetime-local" class="form-control" id="check_out" name="check_out" required="required"/>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="no_of_guests">Number of Guests</label>
+                                <input type="number" class="form-control" id="no_of_guests" name="no_of_guests" min="1" required="required"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label>Selected Rooms</label>
+                        <div class="card p-3">
+                            <t t-if="rooms">
+                                <t t-foreach="rooms" t-as="room">
+                                    <input type="hidden" name="room_ids" t-att-value="room.id"/>
+                                    <div class="card p-3 mb-2">
+                                        <p>
+                                            <strong>
+                                                <t t-esc="room.display_name"/>
+                                            </strong> 
+                                        </p>
+                                    </div>
+                                </t>
+                            </t>
+                            <t t-else="">
+                                <p class="text-muted">No room selected. <a href="/available_rooms">Select a room</a>.</p>
+                            </t>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label>Total Price Per Night</label>
+                        <div class="card p-3">
+                            <strong>
+                               Ksh. <t t-esc="total_price"/> 
+                            </strong>
+                        </div>
+                    </div>
+
+                      <div class="text-center">
+                                <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-sm px-5 py-3">
+                                    <span class="font-weight-bold">Confirm Booking</span>
+                                </button>
+                            </div>
+                </form>
+            </div>
+        </t>
+    </template>
+</odoo>

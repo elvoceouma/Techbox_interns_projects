@@ -1,0 +1,32 @@
+<odoo>
+    <data>
+        <!-- Booking Confirmation Email Template -->
+        <record id="booking_confirmation_email_template" model="mail.template">
+            <field name="name">Booking Confirmation Email</field>
+            
+            <field name="email_to">${object.guest_name.email}</field> <!-- Use guest's email -->
+            <field name="subject">Booking Confirmation for Your Room Booking</field>
+            <field name="model_id" ref="swiftstay_workspace.model_swiftstay_booking"/>
+            <field name="body_html">
+                <![CDATA[
+                    <p>Hello <t t-out="object.guest_name.name"/>,</p>
+                    <p>Thank you for booking with us. Your booking details are as follows:</p>
+
+                    <p><strong>Check-in Date:</strong> <t t-out="object.check_in"/></p>
+                    <p><strong>Check-out Date:</strong> <t t-out="object.check_out"/></p>
+                    <p><strong>Number of Guests:</strong> <t t-out="object.no_of_guests"/></p>
+
+                    <p><strong>Room(s):</strong> 
+                        <t t-foreach="object.room_no" t-as="room">
+                            <span><t t-out="room.name.name"/> (Room Type: <t t-out="room.room_type_id.name"/>)</span><br/>
+                        </t>
+                    </p>
+
+                    <p><strong>Total Price:</strong> Ksh. <t t-out="object.total_price"/></p>
+
+                    <p>We look forward to welcoming you!</p>
+                ]]>
+            </field>
+        </record>
+    </data>
+</odoo>

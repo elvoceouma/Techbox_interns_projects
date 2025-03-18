@@ -20,12 +20,7 @@ class Rooms(models.Model):
     ], string='Room Status', default='available', required=True, tracking=True)
     price_per_night = fields.Float(related='room_type_id.price_per_night', string="Price Per Night (Ksh.)", store=True, tracking=True)
 
-    room_image = fields.Binary(
-        string="Room Image",
-        attachment=True,
-        related='name.image_1920', 
-        tracking=True
-    )
+    room_image = fields.Binary(string="Room Image", attachment=True, related='name.image_1920', tracking=True)
     
 
     room_colour = fields.Integer(string="Colour", required=True, tracking=True)
