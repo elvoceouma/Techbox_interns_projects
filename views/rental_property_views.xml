@@ -1,0 +1,63 @@
+<odoo>
+    <!-- Tree View -->
+    <record id="view_rental_property_tree" model="ir.ui.view">
+        <field name="name">rental.property.tree</field>
+        <field name="model">rental.property</field>
+        <field name="arch" type="xml">
+            <tree string="Rental Properties">
+                <field name="name"/>
+                <field name="address"/>
+                <field name="owner_id"/>
+                <field name="property_type"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_rental_property_form" model="ir.ui.view">
+        <field name="name">rental.property.form</field>
+        <field name="model">rental.property</field>
+        <field name="arch" type="xml">
+            <form string="Rental Property">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="address"/>
+                        <field name="owner_id"/>
+                        <field name="property_type"/>
+                    </group>
+                    <group>
+                        <field name="rental_units_ids" widget="one2many_list"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Kanban View -->
+    <record id="view_rental_property_kanban" model="ir.ui.view">
+        <field name="name">rental.property.kanban</field>
+        <field name="model">rental.property</field>
+        <field name="arch" type="xml">
+            <kanban string="Rental Properties" class="o_kanban_view">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card property_kanban">
+                            <div class="property_header">
+                                <span class="fa fa-building kanban_icon"></span>
+                                <strong class="oe_kanban_title">
+                                    <field name="name"/>
+                                </strong>
+                            </div>
+                            <div class="property_body">
+                                <span><i class="fa fa-map-marker"></i> <field name="address"/></span><br/>
+                                <span><i class="fa fa-user"></i> <field name="owner_id"/></span><br/>
+                                <span><i class="fa fa-home"></i> <field name="property_type"/></span>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+</odoo>
