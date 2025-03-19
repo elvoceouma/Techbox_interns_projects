@@ -35,7 +35,7 @@ class Booking(models.Model):
 
     state = fields.Selection([
         ('available', 'Available'),
-        ('occupied', 'Occupied'),
+        ('reserved_by_admin', 'Reserved By Admin'),
         ('reserved_by_guest','Reserved By Guest'),
         ('checked_out', 'Checked Out')
     ], string='State', default="available") 
@@ -82,7 +82,7 @@ class Booking(models.Model):
             booking.room_no.write({'room_status': 'occupied'})
 
         if is_admin_or_officer:
-            booking.state = 'occupied'
+            booking.state = 'reserved_by_admin'
         else:
             booking.state = 'reserved_by_guest'  
 

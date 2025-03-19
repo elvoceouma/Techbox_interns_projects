@@ -19,7 +19,7 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <span t-attf-class="badge bg-{{ 'success' if booking.state == 'occupied' else 'warning' if booking.state == 'checked_out' else 'info' }}">
+                                            <span t-attf-class="badge bg-{{ 'success' if booking.state == 'reserved_by_guest' else 'warning' if booking.state == 'checked_out' else 'info' }}">
                                                 <t t-esc="booking.state.replace('_', ' ').title()"/>
 
                                             </span>
