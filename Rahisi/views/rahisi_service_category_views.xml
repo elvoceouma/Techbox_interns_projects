@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Tree View -->
+        <record id="view_rahisi_service_category_tree" model="ir.ui.view">
+            <field name="name">rahisi.service.category.tree</field>
+            <field name="model">rahisi.service.category</field>
+            <field name="arch" type="xml">
+                <tree string="Service Categories">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="job_count"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_rahisi_service_category_form" model="ir.ui.view">
+            <field name="name">rahisi.service.category.form</field>
+            <field name="model">rahisi.service.category</field>
+            <field name="arch" type="xml">
+                <form string="Service Category">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_add_service" type="object" 
+                                    string="Add Service" class="oe_stat_button" icon="fa-plus"
+                                    context="{'default_provider_id': context.get('default_provider_id', False)}"/>
+                        </div>
+                        <field name="icon" widget="image" class="oe_avatar"/>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" placeholder="Enter Service Category Name"/>
+                            </h1>
+                        </div>
+                        <group col="2">
+                            <group>
+                                <field name="description" placeholder="Brief description of this service category"/>
+                            </group>
+                            <group>
+                                <field name="active"/>
+                                <field name="job_count" readonly="1"/>
+                            </group>
+                        </group>
+                        
+                        <!-- Services in this category -->
+                        <notebook>
+                            <page string="Services in this Category">
+                                <field name="service_ids" readonly="0">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="provider_id"/>
+                                        <field name="price" widget="monetary"/>
+                                        <field name="currency_id" invisible="1"/>
+                                        <field name="is_available"/>
+                                        <field name="active"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    
+                    <!-- Chatter for categories -->
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Kanban View with prominently displayed Add Service button -->
+        <record id="view_rahisi_service_category_kanban" model="ir.ui.view">
+            <field name="name">rahisi.service.category.kanban</field>
+            <field name="model">rahisi.service.category</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="active"/>
+                    <field name="icon"/>
+                    <field name="job_count"/>
+                    <field name="id"/>
+
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="o_kanban_content">
+                                    <div class="o_kanban_image me-3" t-if="record.icon.raw_value">
+                                        <img t-att-src="kanban_image('rahisi.service.category', 'icon', record.id.raw_value)" alt="Category Icon"/>
+                                    </div>
+                                    <div class="o_kanban_record_top mb-2">
+                                        <div class="o_kanban_record_headings">
+                                            <strong class="o_kanban_record_title">
+                                                <field name="name"/>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                    <div class="o_kanban_record_body mb-2">
+                                        <div>
+                                            <field name="description"/>
+                                        </div>
+                                        <div class="mt-2">
+                                            <span class="badge rounded-pill bg-info text-white">
+                                                <t t-esc="record.job_count.value"/> Jobs
+                                            </span>
+                                            <span t-if="!record.active.raw_value" class="badge rounded-pill bg-danger text-white ms-1">Inactive</span>
+                                        </div>
+                                    </div>
+                                    <div class="o_kanban_record_bottom mt-2">
+                                        <button name="action_add_service" type="object" 
+                                                class="btn btn-primary btn-sm w-100"
+                                                context="{'default_provider_id': context.get('default_provider_id', False)}">
+                                            Add Service to Category
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="view_rahisi_service_category_search" model="ir.ui.view">
+            <field name="name">rahisi.service.category.search</field>
+            <field name="model">rahisi.service.category</field>
+            <field name="arch" type="xml">
+                <search string="Service Categories">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Active Status" name="groupby_active" context="{'group_by': 'active'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_rahisi_service_category" model="ir.actions.act_window">
+            <field name="name">Service Categories</field>
+            <field name="res_model">rahisi.service.category</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="view_rahisi_service_category_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first service category!
+                </p>
+                <p>
+                    Service categories organize your services. 
+                    After creating a category, you can add services to it.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>
+

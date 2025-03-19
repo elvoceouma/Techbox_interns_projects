@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!--    SwiftStay Amenities Views-->
+
+        <!--List View-->
+        <record id="view_swiftstay_amenities_tree" model="ir.ui.view">
+            <field name="name">swiftstay.amenities.tree</field>
+            <field name="model">swiftstay.amenities</field>
+            <field name="arch" type="xml">
+                <tree string= "Amenities">
+                    <field name="name"/>
+                    <field name="colour"/>
+
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="view_swiftstay_amenities_form" model="ir.ui.view">
+            <field name="name">swiftstay.amenities.form</field>
+            <field name="model">swiftstay.amenities</field>
+            <field name="arch" type="xml">
+                <form string="Amenities">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="colour" widget="color_picker"/>
+                             
+
+                        </group>
+                    </sheet>
+                      <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_swiftstay_amenities_search" model="ir.ui.view">
+            <field name="name">swiftstay.amenities.search</field>
+            <field name="model">swiftstay.amenities</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+
+
+                    <filter name="filter_wifi" string="Wi-Fi" domain="[('name', '=', 'WI-FI')]"/>
+                    <filter name="filter_tv" string="Television" domain="[('name', '=', 'Television')]"/>
+                    <filter name="filter_fridge" string="Mini Fridge" domain="[('name', '=', 'Mini Fridge')]"/>
+                    <filter name="filter_coffee_tea" string="Coffee/Tea Maker" domain="[('name', '=', 'Coffee/Tea Maker')]"/>
+                    <filter name="filter_desk" string="Desk and Chair" domain="[('name', '=', 'Desk and Chair')]"/>
+                    <filter name="filter_closet" string="Closet/Storage" domain="[('name', '=', 'Closet/Storage')]"/>
+                    <filter name="filter_ac_heating" string="Air Conditioning/Heating" domain="[('name', '=', 'Air Conditioning/Heating')]"/>
+                    <filter name="filter_iron" string="Iron and Ironing Board" domain="[('name', '=', 'Iron and Ironing Board')]"/>
+                    <filter name="filter_safe" string="Safe" domain="[('name', '=', 'Safe')]"/>
+                    <filter name="filter_balcony" string="Balcony/Patio" domain="[('name', '=', 'Balcony/Patio')]"/>
+                    <filter name="filter_jacuzzi" string="Jacuzzi or Hot Tub" domain="[('name', '=', 'Jacuzzi or Hot Tub')]"/>
+                    <filter name="filter_lighting" string="Room Lighting Controls" domain="[('name', '=', 'Room Lighting Controls')]"/>
+
+
+                    <group expand="0" string="Group By">
+                        <filter name="group_by_amenity" string="Amenity Name" context="{'group_by': 'name'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="view_swiftstay_amenities_kanban" model="ir.ui.view">
+            <field name="name">swiftstay.amenities.kanban</field>
+            <field name="model">swiftstay.amenities</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name="name"/>
+                    <field name="colour"/>
+
+
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="oe_kanban_details">
+                                    <ul>
+                                        <li>Amenity Name: <field name="name"/>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="action_swiftstay_amenities" model="ir.actions.act_window">
+            <field name="name">Amenities</field>
+            <field name="res_model">swiftstay.amenities</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="search_view_id" ref="view_swiftstay_amenities_search"/>
+
+        </record>
+
+    </data>
+</odoo>

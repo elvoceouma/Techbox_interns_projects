@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!--Teacher Teacher Views-->
+        <!--Menu Actions-->
+
+        <!--List View-->
+        <record id="view_teacher_teacher_list" model="ir.ui.view">
+            <field name="name">teacher.teacher.list</field>
+            <field name="model">teacher.teacher</field>
+            <field name="arch" type="xml">
+                <tree string= "Teacher">
+                    <field name="name"/>
+                    <field name="idnumber"/>
+                    <field name="date_of_employment"/>
+                    <field name="gender"/>
+                    <field name="gradeteacher"/>
+                    <field name="subjects"/>
+                    <field name="contact"/>
+                    <field name="bank_name"/>
+                    <field name="bank_account"/>
+                </tree>
+            </field>
+        </record>
+        <!--Form View-->
+        <record id="view_teacher_teacher_form" model="ir.ui.view">
+            <field name="name">teacher.teacher.form</field>
+            <field name="model">teacher.teacher</field>
+            <field name="arch" type="xml">
+                <form string="Teacher">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="idnumber"/>
+                            <field name="date_of_employment"/>
+                            <field name="gender"/>
+                            <field name="gradeteacher"/>
+                            <field name="subjects"/>
+                            <field name="contact"/>
+                            <field name="bank_name"/>
+                            <field name="bank_account"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+            </record>
+        </data>
+    </odoo>

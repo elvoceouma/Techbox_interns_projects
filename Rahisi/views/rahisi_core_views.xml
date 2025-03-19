@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Dashboard View -->
+        <record id="view_rahisi_dashboard" model="ir.ui.view">
+            <field name="name">rahisi.dashboard</field>
+            <field name="model">rahisi.dashboard</field>
+            <field name="arch" type="xml">
+                <form string="Rahisi Dashboard" create="false" edit="true" delete="false">
+                    <!-- <header>
+                        <button name="refresh_dashboard" string="Refresh Dashboard" type="object" class="oe_highlight"/>
+                    </header> -->
+                    <sheet>
+                        <div class="oe_title">
+                            <h4>Last Updated: <field name="last_update" readonly="1"/>
+                            </h4>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <h2 class="mb-3">Summary</h2>
+                                    <div class="o_kanban_card_content">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <label for="total_providers">Service Providers: </label>
+                                                <field name="total_providers"/>
+                                            </div>
+                                            <div class="col-6">
+                                                <label for="total_customers">Customers: </label>
+                                                <field name="total_customers"/>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-6">
+                                                <label for="active_jobs">Active Jobs: </label>
+                                                <field name="active_jobs"/>
+                                            </div>
+                                            <div class="col-6">
+                                                <label for="completed_jobs">Completed Jobs: </label>
+                                                <field name="completed_jobs"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Actions -->
+        <record id="action_rahisi_dashboard" model="ir.actions.act_window">
+            <field name="name">Dashboard</field>
+            <field name="res_model">rahisi.dashboard</field>
+            <field name="view_mode">form</field>
+            <field name="target">current</field>
+            <field name="context">{'create': False, 'edit': True, 'no_create': True}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_empty_folder">
+                    Dashboard
+                </p>
+                <p>
+                    This dashboard provides an overview of your Rahisi operations.
+                    No new dashboards can be created as this is a singleton record.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

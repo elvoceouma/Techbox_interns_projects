@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Service Views -->
+        <record id="view_rahisi_service_tree" model="ir.ui.view">
+            <field name="name">rahisi.service.tree</field>
+            <field name="model">rahisi.service</field>
+            <field name="arch" type="xml">
+                <tree string="Services" create="false">
+                    <field name="name"/>
+                    <field name="provider_id"/>
+                    <field name="category_id"/>
+                    <field name="price" widget="monetary"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="is_available"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_rahisi_service_form" model="ir.ui.view">
+            <field name="name">rahisi.service.form</field>
+            <field name="model">rahisi.service</field>
+            <field name="arch" type="xml">
+                <form string="Service">
+                    <sheet>
+                        <!-- Title -->
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Enter Service Name"/>
+                            </h1>
+                        </div>
+
+                        <!-- General Information -->
+                        <group>
+                            <group>
+                                <field name="provider_id" options="{'no_create': True}"/>
+                                <field name="category_id" options="{'no_create': True}"/>
+                                <field name="price" widget="monetary"/>
+                                <field name="currency_id" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="active"/>
+                                <field name="is_available" readonly="1"/>
+                            </group>
+                        </group>
+
+                        <!-- Additional Information -->
+                        <notebook>
+                            <page string="Description">
+                                <field name="description" placeholder="Detailed description of the service..."/>
+                            </page>
+                            <page string="Portfolio">
+                                <field name="portfolio_images" widget="many2many_binary"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+
+                    <!-- Chatter-->
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Service Kanban View -->
+        <record id="view_rahisi_service_kanban" model="ir.ui.view">
+            <field name="name">rahisi.service.kanban</field>
+            <field name="model">rahisi.service</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile" create="false">
+                    <field name="name"/>
+                    <field name="provider_id"/>
+                    <field name="category_id"/>
+                    <field name="price"/>
+                    <field name="currency_id"/>
+                    <field name="active"/>
+                    <field name="is_available"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_rahisi_service_kanban">
+                                <div class="oe_kanban_details">
+                                    <div class="o_kanban_record_top mb-0">
+                                        <div class="o_kanban_record_headings">
+                                            <strong class="o_kanban_record_title">
+                                                <field name="name"/>
+                                            </strong>
+                                        </div>
+                                        <div class="o_dropdown_kanban dropdown">
+                                            <a class="dropdown-toggle o-no-caret btn" role="button" data-toggle="dropdown" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                                <span class="fa fa-ellipsis-v"/>
+                                            </a>
+                                            <div class="dropdown-menu" role="menu">
+                                                <t t-if="widget.editable">
+                                                    <a role="menuitem" type="edit" class="dropdown-item">Edit</a>
+                                                </t>
+                                                <t t-if="widget.deletable">
+                                                    <a role="menuitem" type="delete" class="dropdown-item">Delete</a>
+                                                </t>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="o_kanban_record_body">
+                                        <div class="text-muted">
+                                            <strong>Provider: </strong>
+                                            <field name="provider_id"/>
+                                        </div>
+                                        <div class="text-muted">
+                                            <strong>Category: </strong>
+                                            <field name="category_id"/>
+                                        </div>
+                                        <div class="text-muted">
+                                            <strong>Price: </strong>
+                                            <field name="price" widget="monetary"/>
+                                        </div>
+                                        <div class="mt-2">
+                                            <span t-if="record.is_available.raw_value" class="badge badge-success">Available</span>
+                                            <span t-else="" class="badge badge-danger">Not Available</span>
+                                        </div>
+                                    </div>
+                                    <div class="o_kanban_record_bottom">
+                                        <div class="oe_kanban_bottom_left">
+                                            <field name="active" widget="boolean_toggle"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="view_rahisi_service_search" model="ir.ui.view">
+            <field name="name">rahisi.service.search</field>
+            <field name="model">rahisi.service</field>
+            <field name="arch" type="xml">
+                <search string="Services">
+                    <field name="name"/>
+                    <field name="provider_id"/>
+                    <field name="category_id"/>
+                    <field name="description"/>
+                    <filter string="Available" name="available" domain="[('is_available', '=', True)]"/>
+                    <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Provider" name="group_by_provider" context="{'group_by': 'provider_id'}"/>
+                        <filter string="Category" name="group_by_category" context="{'group_by': 'category_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Service Action -->
+        <record id="action_rahisi_service" model="ir.actions.act_window">
+            <field name="name">Services</field>
+            <field name="res_model">rahisi.service</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="view_rahisi_service_search"/>
+            <field name="context">{'search_default_active': 1, 'create': false}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No services found.
+                </p>
+                <p>
+                    Services can only be added through the Service Categories or Service Providers.
+                    <br/>
+                    To add a new service:
+                    <ul>
+                        <li>Go to Service Categories and select a category</li>
+                        <li>Click on "Add Service" button</li>
+                        <li>Or use the "Add New Service" button from a Service Provider's form</li>
+                    </ul>
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

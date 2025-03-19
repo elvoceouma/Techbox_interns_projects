@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!--Learner Learner Views-->
+        <!--Menu Actions-->
+
+        <!--List View-->
+        <record id="view_learner_learner_list" model="ir.ui.view">
+            <field name="name">learner.learner.list</field>
+            <field name="model">learner.learner</field>
+            <field name="arch" type="xml">
+                <tree string= "Learner">
+                    <field name="name"/>
+                    <field name="number"/>
+                    <field name="date"/>
+                    <field name="gender"/>
+                    <field name="grade"/>
+                    <field name="pname"/>
+                    <field name="contact"/>
+                    <field name="route"/>
+                </tree>
+            </field>
+        </record>
+        <!--Form View-->
+        <record id="view_learner_learner_form" model="ir.ui.view">
+            <field name="name">learner.learner.form</field>
+            <field name="model">learner.learner</field>
+            <field name="arch" type="xml">
+                <form string="Learner">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="number"/>
+                            <field name="date"/>
+                            <field name="gender"/>
+                            <field name="grade"/>
+                            <field name="pname"/>
+                            <field name="contact"/>
+                            <field name="route"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+            </record>
+        </data>
+    </odoo>

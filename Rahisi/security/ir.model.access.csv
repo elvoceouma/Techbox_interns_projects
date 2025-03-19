@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_rahisi_dashboard,rahisi.dashboard,model_rahisi_dashboard,base.group_user,1,1,1,1
+access_rahisi_service_category,rahisi.service.category,model_rahisi_service_category,base.group_user,1,1,1,1
+access_rahisi_service_provider,rahisi.service.provider,model_rahisi_service_provider,base.group_user,1,1,1,1
+access_rahisi_service,rahisi.service,model_rahisi_service,base.group_user,1,1,1,1
+access_rahisi_customer,rahisi.customer,model_rahisi_customer,base.group_user,1,1,1,1
+access_rahisi_job,rahisi.job,model_rahisi_job,base.group_user,1,1,1,1
+access_rahisi_review,rahisi.review,model_rahisi_review,base.group_user,1,1,1,1
+access_rahisi_transportation_config,rahisi.transportation.config,model_rahisi_transportation_config,base.group_user,1,1,1,1

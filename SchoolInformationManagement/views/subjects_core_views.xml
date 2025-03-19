@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!--Subjects Views-->
+        <!--Menu Actions-->
+
+        <!--List View-->
+        <record id="view_subjects_subjects_list" model="ir.ui.view">
+            <field name="name">subjects.subjects.list</field>
+            <field name="model">subjects.subjects</field>
+            <field name="arch" type="xml">
+                <tree string= "Subjects">
+                    <field name="name"/>
+                    <field name="teacher"/>
+                    <field name="level"/>
+                    <field name="grade"/>
+                    <field name="learner"/>
+                </tree>
+            </field>
+        </record>
+        <!--Form View-->
+        <record id="view_subjects_subjects_form" model="ir.ui.view">
+            <field name="name">subjects.subjects.form</field>
+            <field name="model">subjects.subjects</field>
+            <field name="arch" type="xml">
+                <form string="Subjects">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="teacher"/>
+                            <field name="level"/>
+                            <field name="grade"/>
+                            <field name="learner"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+            </record>
+        </data>
+    </odoo>

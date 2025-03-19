@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!--    SwiftStay Room Types Views-->
+
+        <!--List View-->
+        <record id="view_swiftstay_room_types_tree" model="ir.ui.view">
+            <field name="name">swiftstay.room.types.tree</field>
+            <field name="model">swiftstay.roomtypes</field>
+            <field name="arch" type="xml">
+                <tree string= "Room Types">
+                    <field name="name"/>
+                    <field name="amenity_ids" widget="many2many_tags" options="{'color_field': 'colour'}"/>
+                    <field name="price_per_night"/>
+                    <field name="roomtype_colour"/>
+
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="view_swiftstay_room_types_form" model="ir.ui.view">
+            <field name="name">swiftstay.room.types.form</field>
+            <field name="model">swiftstay.roomtypes</field>
+            <field name="arch" type="xml">
+                <form string="Room Types">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="amenity_ids" options="{'color_field': 'colour'}"/>
+                            <field name="price_per_night"/>
+                            <field name="roomtype_colour" widget="color_picker"/>
+
+
+                        </group>
+                    </sheet>
+                      <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="view_swiftstay_room_types_search" model="ir.ui.view">
+            <field name="name">swiftstay.room.types.search</field>
+            <field name="model">swiftstay.roomtypes</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="price_per_night"/>
+                    <field name="amenity_ids" options="{'color_field': 'colour'}"/>
+
+                    <filter string="Low Price" name="low_price" domain="[('price_per_night', '&lt;', 15000)]"/>
+                    <filter string="High Price" name="high_price" domain="[('price_per_night', '&gt;', 20000)]"/>
+
+                    <group expand="0" string="Group By">
+                        <filter string="Price Per Night" name="group_by_price" context="{'group_by': 'price_per_night'}"/>
+                        <filter string="Amenities" name="group_by_amenities" context="{'group_by': 'amenity_ids'}"/>
+                    </group>
+
+                </search>
+            </field>
+        </record>
+
+ <!-- Kanban View -->
+        <record id="view_swiftstay_room_types_kanban" model="ir.ui.view">
+            <field name="name">swiftstay.room.types.kanban</field>
+            <field name="model">swiftstay.roomtypes</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name="name"/>
+                    <field name="price_per_night"/>
+                    <field name="amenity_ids" widget="many2many_tags" options="{'color_field': 'colour'}"/>
+                    <field name="roomtype_colour"/>
+
+
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="oe_kanban_details">
+                                    <ul>
+                                        <li>Room Type: <field name="name"/>
+                                        </li>
+                                        <li>Price Per Night: <field name="price_per_night"/>
+                                        </li>
+                                         <li>Amenities: <field name="amenity_ids" widget="many2many_tags" options="{'color_field': 'colour'}"/>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <record id="action_swiftstay_room_types" model="ir.actions.act_window">
+            <field name="name">Room Types</field>
+            <field name="res_model">swiftstay.roomtypes</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="search_view_id" ref="view_swiftstay_room_types_search"/>
+
+        </record>
+
+    </data>
+</odoo>
