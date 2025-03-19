@@ -28,8 +28,7 @@ class RoomController(http.Controller):
         user = request.env.user
         guest_name = user.partner_id.name
         email = user.email
-        mobile = user.partner_id.mobile  # Fetch the mobile number
-
+        mobile = user.partner_id.mobile  
         room_ids = request.httprequest.form.getlist('room_ids')
         if not room_ids or not all(id.isdigit() for id in room_ids):
             _logger.warning("No valid room selected! Redirecting...")
@@ -43,7 +42,7 @@ class RoomController(http.Controller):
             'total_price': total_price,
             'guest_name': guest_name,
             'email': email,
-            'mobile': mobile  # Pass the mobile number to the template
+            'mobile': mobile  
         })
 
 
@@ -64,7 +63,7 @@ class RoomController(http.Controller):
             _logger.warning("Guest name does not match the logged-in user's name!")
             raise UserError("The guest name must match your account name.")
 
-        # In your room_booking_submit method, modify the partner creation part:
+     
         partner = request.env['res.partner'].sudo().search([('name', '=', guest_name)], limit=1)
         if not partner:
             partner = request.env['res.partner'].sudo().create({
@@ -73,7 +72,7 @@ class RoomController(http.Controller):
                 'mobile': post.get('phone_no')  # This is correct, using mobile field
             })
         else:
-            # Update existing partner with new phone number if it's empty
+            
             if not partner.mobile and post.get('phone_no'):
                 partner.write({'mobile': post.get('phone_no')})
         check_in_str = post.get('check_in')
@@ -125,6 +124,10 @@ class RoomController(http.Controller):
     @http.route('/my_bookings', type='http', auth='user', website=True)
     def my_bookings(self):
         user = request.env.user
-        bookings = request.env['swiftstay.booking'].sudo().search([('guest_name', '=', user.partner_id.name)])
-
+        bookings = request.env['swiftstay.booking'].sudo().search(
+            [('guest_name', '=', user.partner_id.name)], 
+            order="create_date desc"  
+        )
+        
         return request.render('swiftstay_workspace.user_dashboard', {'bookings': bookings})
+

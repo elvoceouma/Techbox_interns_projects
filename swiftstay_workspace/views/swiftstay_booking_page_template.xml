@@ -1,93 +1,147 @@
 <odoo>
     <template id="booking_page">
         <t t-call="website.layout">
-            <div class="container">
-                <h2 class="mt-4 mb-4">Room Booking</h2>
-
-                <form action="/room_booking/submit" method="post">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group mb-3">
-                                <label for="guest_name">Name</label>
-                                <input type="text" class="form-control" id="guest_name" name="guest_name" required="required" t-att-value="guest_name"/>
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="phone_no">Phone</label>
-                                <input type="text" class="form-control" id="phone_no" name="phone_no" t-att-value="mobile"/>
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="email">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" required="required" t-att-value="email"/>
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="id_no">ID Number</label>
-                                <input type="text" class="form-control" id="id_no" name="id_no" maxlength="8"/>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group mb-3">
-                                <label for="passport_no">Passport Number</label>
-                                <input type="text" class="form-control" id="passport_no" name="passport_no" maxlength="9"/>
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="check_in">Check-in Date</label>
-                                <input type="datetime-local" class="form-control" id="check_in" name="check_in" required="required"/>
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="check_out">Check-out Date</label>
-                                <input type="datetime-local" class="form-control" id="check_out" name="check_out" required="required"/>
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="no_of_guests">Number of Guests</label>
-                                <input type="number" class="form-control" id="no_of_guests" name="no_of_guests" min="1" required="required"/>
-                            </div>
-                        </div>
+            <section class="py-5 bg-light">
+                <div class="container">
+                 
+                    <div class="text-center mb-5">
+                        <h1 class="display-4 fw-bold">Complete Your Booking</h1>
+                        <p class="lead text-muted">You're just a few steps away from confirming your stay</p>
                     </div>
-
-                    <div class="form-group mb-3">
-                        <label>Selected Rooms</label>
-                        <div class="card p-3">
-                            <t t-if="rooms">
-                                <t t-foreach="rooms" t-as="room">
-                                    <input type="hidden" name="room_ids" t-att-value="room.id"/>
-                                    <div class="card p-3 mb-2">
-                                        <p>
-                                            <strong>
-                                                <t t-esc="room.display_name"/>
-                                            </strong> 
-                                        </p>
+                    
+                    
+                    <div class="card border-0 shadow-lg rounded-3 mb-5">
+                        <div class="card-body p-4 p-md-5">
+                            <form action="/room_booking/submit" method="post">
+                              
+                                <div class="mb-4">
+                                    <h3 class="border-bottom pb-2 mb-4">Guest Information</h3>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3">
+                                                <input type="text" class="form-control" id="guest_name" name="guest_name" required="required" t-att-value="guest_name" placeholder="Full Name"/>
+                                                <label for="guest_name">Full Name</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3">
+                                                <input type="email" class="form-control" id="email" name="email" required="required" t-att-value="email" placeholder="Email Address"/>
+                                                <label for="email">Email Address</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3">
+                                                <input type="text" class="form-control" id="phone_no" name="phone_no" t-att-value="mobile" placeholder="Phone Number"/>
+                                                <label for="phone_no">Phone Number</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3">
+                                                <input type="text" class="form-control" id="id_no" name="id_no" maxlength="8" placeholder="ID Number"/>
+                                                <label for="id_no">ID Number</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3">
+                                                <input type="text" class="form-control" id="passport_no" name="passport_no" maxlength="9" placeholder="Passport Number"/>
+                                                <label for="passport_no">Passport Number</label>
+                                                <div class="form-text text-muted">Required for international guests</div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </t>
-                            </t>
-                            <t t-else="">
-                                <p class="text-muted">No room selected. <a href="/available_rooms">Select a room</a>.</p>
-                            </t>
+                                </div>
+                                
+                               
+                                <div class="mb-4">
+                                    <h3 class="border-bottom pb-2 mb-4">Stay Details</h3>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3">
+                                                <input type="datetime-local" class="form-control" id="check_in" name="check_in" required="required"/>
+                                                <label for="check_in">Check-in Date</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3">
+                                                <input type="datetime-local" class="form-control" id="check_out" name="check_out" required="required"/>
+                                                <label for="check_out">Check-out Date</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3">
+                                                <input type="number" class="form-control" id="no_of_guests" name="no_of_guests" min="1" required="required" placeholder="Number of Guests"/>
+                                                <label for="no_of_guests">Number of Guests</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                               
+                                <div class="mb-4">
+                                    <h3 class="border-bottom pb-2 mb-4">Selected Rooms</h3>
+                                    <div class="bg-light p-4 rounded-3">
+                                        <t t-if="rooms">
+                                            <div class="row g-3">
+                                                <t t-foreach="rooms" t-as="room">
+                                                    <input type="hidden" name="room_ids" t-att-value="room.id"/>
+                                                    <div class="col-md-6">
+                                                        <div class="card h-100 border-0 shadow-sm rounded-3 room-card">
+                                                            <div class="card-body p-3">
+                                                                <div class="d-flex align-items-center">
+                                                                    <div class="flex-shrink-0">
+                                                                        <div class="room-icon bg-primary text-white rounded-circle d-flex align-items-center justify-content-center">
+                                                                            <i class="fa fa-bed" aria-hidden="true"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="flex-grow-1 ms-3">
+                                                                        <h5 class="mb-0"><t t-esc="room.display_name"/></h5>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </t>
+                                            </div>
+                                        </t>
+                                        <t t-else="">
+                                            <div class="text-center py-4">
+                                                <i class="fa fa-bed fa-3x text-muted mb-3" aria-hidden="true"></i>
+                                                <p class="text-muted mb-3">No room selected.</p>
+                                                <a href="/available_rooms" class="btn btn-outline-primary">Select a Room</a>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+                                
+                               
+                                <div class="mb-5">
+                                    <h3 class="border-bottom pb-2 mb-4">Price Summary</h3>
+                                    <div class="card border-0 bg-primary text-white shadow-sm rounded-3">
+                                        <div class="card-body p-4">
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    <h4 class="mb-0">Total Price Per Night</h4>
+                                                </div>
+                                                <div class="col-4 text-end">
+                                                    <h4 class="mb-0">Ksh. <t t-esc="total_price"/></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow px-5 py-3">
+                                        <i class="fa fa-check-circle me-2" aria-hidden="true"></i>
+                                        <span class="fw-bold">Confirm Booking</span>
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-
-                    <div class="form-group mb-3">
-                        <label>Total Price Per Night</label>
-                        <div class="card p-3">
-                            <strong>
-                               Ksh. <t t-esc="total_price"/> 
-                            </strong>
-                        </div>
-                    </div>
-
-                      <div class="text-center">
-                                <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-sm px-5 py-3">
-                                    <span class="font-weight-bold">Confirm Booking</span>
-                                </button>
-                            </div>
-                </form>
-            </div>
+                </div>
+            </section>
         </t>
     </template>
 </odoo>
