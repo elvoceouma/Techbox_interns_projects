@@ -69,7 +69,7 @@ class RoomController(http.Controller):
             partner = request.env['res.partner'].sudo().create({
                 'name': guest_name,
                 'email': post.get('email'),
-                'mobile': post.get('phone_no')  # This is correct, using mobile field
+                'mobile': post.get('phone_no') 
             })
         else:
             

@@ -16,7 +16,13 @@ class Booking(models.Model):
     check_out = fields.Datetime(string='Check-out Date', required=True, tracking=True)
     duration = fields.Integer(string='Duration (Days)', compute='compute_duration', store=True)
     no_of_guests = fields.Integer('Number of Guests', tracking=True)
-    name = fields.Many2many('swiftstay.roomtypes', string="Room Types", tracking=True)  
+    name = fields.Many2many(
+    'swiftstay.roomtypes', 
+    string="Room Types", 
+    tracking=True,
+    domain="[('has_available_rooms', '=', True)]"
+)
+ 
     room_no = fields.Many2many(
         'swiftstay.rooms', 
         string='Room Number', 
@@ -30,6 +36,7 @@ class Booking(models.Model):
     state = fields.Selection([
         ('available', 'Available'),
         ('occupied', 'Occupied'),
+        ('reserved_by_guest','Reserved By Guest'),
         ('checked_out', 'Checked Out')
     ], string='State', default="available") 
 
@@ -67,15 +74,23 @@ class Booking(models.Model):
     def create(self, vals):
         booking = super(Booking, self).create(vals)
 
+        
+        is_admin_or_officer = self.env.user.has_group('swiftstay_workspace.group_swiftstay_admin') or \
+                            self.env.user.has_group('swiftstay_workspace.group_swiftstay_officer')
+
         if 'room_no' in vals and booking.room_no:
             booking.room_no.write({'room_status': 'occupied'})
-        booking.state = 'occupied'
+
+        if is_admin_or_officer:
+            booking.state = 'occupied'
+        else:
+            booking.state = 'reserved_by_guest'  
 
        
         invoice_lines = [
             (0, 0, {
                 'product_id': room.name.id,
-                'name': room.room_type_id.name,  
+                'name': room.room_type_id.name,
                 'quantity': booking.duration,
                 'price_unit': room.price_per_night
             })
@@ -91,6 +106,7 @@ class Booking(models.Model):
             })
 
         return booking
+
 
 
 

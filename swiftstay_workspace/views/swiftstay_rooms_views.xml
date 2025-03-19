@@ -62,7 +62,6 @@
                 <kanban class="o_kanban_mobile" sample="1" default_group_by="room_status">
                     <field name="name"/>
                     <field name="room_type_id"/>
-                    <field name="room_status"/>
                     <field name="room_colour"/>
                 
 
@@ -77,8 +76,7 @@
                                         </li>
                                         <li>Room Type: <field name="room_type_id"/>
                                         </li>
-                                        <li>Room Status: <field name="room_status"/>
-                                        </li>
+                                        
                                     </ul>
                                 </div>
                             </div>
@@ -125,6 +123,7 @@
             <field name="res_model">swiftstay.rooms</field>
             <field name="view_mode">kanban,tree,form</field>
             <field name="search_view_id" ref="view_swiftstay_rooms_search"/>
+            <field name="context">{'group_by': ['room_status', 'room_type_id']}</field>
         </record>
 
     </data>
