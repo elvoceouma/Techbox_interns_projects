@@ -1,5 +1,9 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
+import logging
+import pytz
+
+_logger = logging.getLogger(__name__)
 
 class Booking(models.Model):
     _name = 'swiftstay.booking'
@@ -39,8 +43,23 @@ class Booking(models.Model):
         ('reserved_by_guest','Reserved By Guest'),
         ('checked_out', 'Checked Out')
     ], string='State', default="available") 
+    
+    
+    check_in_eat = fields.Datetime(string='Check-in (EAT)', compute="compute_eat_times", store=True)
+    check_out_eat = fields.Datetime(string='Check-out (EAT)', compute="compute_eat_times", store=True)
 
-  
+    @api.depends('check_in', 'check_out')
+    def compute_eat_times(self):
+        EAT = pytz.timezone('Africa/Nairobi')
+
+        for record in self:
+            if record.check_in:
+                check_in_eat = record.check_in.replace(tzinfo=pytz.utc).astimezone(EAT)
+            record.check_in_eat = check_in_eat.replace(tzinfo=None)
+            if record.check_out:
+                check_out_eat = record.check_out.replace(tzinfo=pytz.utc).astimezone(EAT)
+            record.check_out_eat = check_out_eat.replace(tzinfo=None)
+
 
     @api.depends('guest_name')
     def compute_email(self):
@@ -105,8 +124,20 @@ class Booking(models.Model):
                 'invoice_line_ids': invoice_lines
             })
 
+      
+        try:
+            email_template = self.env.ref('swiftstay_workspace.booking_confirmation_email_template')
+            if email_template and booking.guest_name.email:
+                email_template.sudo().write({'email_to': booking.guest_name.email})
+                _logger.info(f"Booking Email: {booking.guest_name.email}")
+                email_template.sudo().send_mail(booking.id, force_send=True)
+                _logger.info("Email sent successfully!")
+        except Exception as e:
+            _logger.error("Failed to send email: %s", e)
+            raise UserError("There was an issue sending the booking confirmation email.")
+        
+        
         return booking
-
 
 
 

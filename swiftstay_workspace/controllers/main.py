@@ -2,7 +2,10 @@ from odoo import http, fields
 from odoo.http import request
 import logging
 from odoo.exceptions import UserError
-from datetime import datetime
+from datetime import datetime, timedelta
+import pytz
+
+
 
 _logger = logging.getLogger(__name__)
 
@@ -48,9 +51,11 @@ class RoomController(http.Controller):
 
 
     @http.route('/room_booking/submit', type='http', auth='public', website=True, methods=['POST'], csrf=False)
+    
+    
     def room_booking_submit(self, **post):
         _logger.info("Room booking submit post: %s", post)
-
+        
         room_ids = request.httprequest.form.getlist('room_ids')
         if not room_ids:
             _logger.warning("No valid room selected! Redirecting...")
@@ -80,8 +85,16 @@ class RoomController(http.Controller):
 
         if check_in_str and check_out_str:
             try:
-                check_in = fields.Datetime.from_string(check_in_str.replace("T", " "))
-                check_out = fields.Datetime.from_string(check_out_str.replace("T", " "))
+                
+                formatted_check_in = datetime.fromisoformat(check_in_str)
+                formatted_check_out = datetime.fromisoformat(check_out_str)
+                check_in = fields.Datetime.from_string(formatted_check_in)
+                check_out = fields.Datetime.from_string(formatted_check_out)
+                check_in = check_in - timedelta(hours=3)
+                check_out = check_out - timedelta(hours=3)
+                 
+        
+                
             except ValueError:
                 _logger.warning("Invalid check-in/check-out times!")
                 raise UserError("Please provide valid check-in and check-out times.")
@@ -101,9 +114,18 @@ class RoomController(http.Controller):
             'no_of_guests': post.get('no_of_guests'),
             'room_no': [(6, 0, room_ids)],  
         })
-
+   
         _logger.info("Booking created successfully! Triggering email.")
-
+        values = {  'guest_name': partner.id,
+            'phone_no': post.get('phone_no'),
+            'email': post.get('email'),
+            'id_no': post.get('id_no'),
+            'passport_no': post.get('passport_no'),
+            'check_in': check_in,
+            'check_out': check_out,
+            'no_of_guests': post.get('no_of_guests'),
+            'room_no': [(6, 0, room_ids)], }
+        _logger.info(values)
         
         try:
             email_template = request.env.ref('swiftstay_workspace.booking_confirmation_email_template')

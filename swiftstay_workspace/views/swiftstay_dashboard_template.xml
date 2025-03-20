@@ -29,11 +29,12 @@
                                         <div class="booking-details">
                                             <div class="mb-2">
                                                 <i class="fa fa-calendar-check-o me-2" aria-hidden="true"></i>
-                                                <strong>Check-in:</strong> <t t-esc="booking.check_in.strftime('%a, %b %d, %Y')"/>
+                                               <strong>Check-in:</strong> <t t-esc="booking.check_in_eat.strftime('%a, %b %d, %Y %I:%M %p')"/>
+
                                             </div>
                                             <div class="mb-2">
                                                 <i class="fa fa-calendar-times-o me-2" aria-hidden="true"></i>
-                                                <strong>Check-out:</strong> <t t-esc="booking.check_out.strftime('%a, %b %d, %Y')"/>
+                                                 <strong>Check-out:</strong> <t t-esc="booking.check_out_eat.strftime('%a, %b %d, %Y %I:%M %p')"/>
                                             </div>
                                             <div>
                                                 <i class="fa fa-users me-2" aria-hidden="true"></i>
