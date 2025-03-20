@@ -3,7 +3,7 @@ from odoo.http import request
 import logging
 from odoo.exceptions import UserError
 from datetime import datetime, timedelta
-import pytz
+
 
 
 
@@ -102,7 +102,8 @@ class RoomController(http.Controller):
             _logger.warning("Invalid check-in/check-out times!")
             raise UserError("Please provide valid check-in and check-out times.")
 
-        
+        rooms = request.env['swiftstay.rooms'].sudo().browse(room_ids)
+        room_type_ids = {room.room_type_id.id for room in rooms}
         booking = request.env['swiftstay.booking'].sudo().create({
             'guest_name': partner.id,
             'phone_no': post.get('phone_no'),
@@ -112,7 +113,9 @@ class RoomController(http.Controller):
             'check_in': check_in,
             'check_out': check_out,
             'no_of_guests': post.get('no_of_guests'),
-            'room_no': [(6, 0, room_ids)],  
+            'name': [(6, 0, room_type_ids)],
+            'room_no': [(6, 0, room_ids)],
+  
         })
    
         _logger.info("Booking created successfully! Triggering email.")

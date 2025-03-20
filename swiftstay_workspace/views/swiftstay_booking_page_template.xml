@@ -3,17 +3,13 @@
         <t t-call="website.layout">
             <section class="py-5 bg-light">
                 <div class="container">
-
                     <div class="text-center mb-5">
                         <h1 class="display-4 fw-bold">Complete Your Booking</h1>
                         <p class="lead text-muted">You're just a few steps away from confirming your stay</p>
                     </div>
-
-
                     <div class="card border-0 shadow-lg rounded-3 mb-5">
                         <div class="card-body p-4 p-md-5">
                             <form action="/room_booking/submit" method="post">
-
                                 <div class="mb-4">
                                     <h3 class="border-bottom pb-2 mb-4">Guest Information</h3>
                                     <div class="row g-3">
@@ -50,8 +46,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                                 <div class="mb-4">
                                     <h3 class="border-bottom pb-2 mb-4">Stay Details</h3>
                                     <div class="row g-3">
@@ -75,8 +69,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                                 <div class="mb-4">
                                     <h3 class="border-bottom pb-2 mb-4">Selected Rooms</h3>
                                     <div class="bg-light p-4 rounded-3">
@@ -97,6 +89,7 @@
                                                                         <h5 class="mb-0">
                                                                             <t t-esc="room.display_name"/>
                                                                         </h5>
+                                                                        <p class="mb-0 text-muted">Room Type: <t t-esc="room.room_type_id.name"/></p>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -114,8 +107,6 @@
                                         </t>
                                     </div>
                                 </div>
-
-
                                 <div class="mb-5">
                                     <h3 class="border-bottom pb-2 mb-4">Price Summary</h3>
                                     <div class="card border-0 bg-primary text-white shadow-sm rounded-3">
@@ -125,15 +116,12 @@
                                                     <h4 class="mb-0">Total Price Per Night</h4>
                                                 </div>
                                                 <div class="col-4 text-end">
-                                                    <h4 class="mb-0">Ksh. <t t-esc="total_price"/>
-                                                    </h4>
+                                                    <h4 class="mb-0">Ksh. <t t-esc="total_price"/></h4>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow px-5 py-3">
                                         <i class="fa fa-check-circle me-2" aria-hidden="true"></i>
