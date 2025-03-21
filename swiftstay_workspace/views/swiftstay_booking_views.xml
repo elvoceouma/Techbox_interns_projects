@@ -23,6 +23,9 @@
                     <field name="room_no" widget="many2many_tags" options="{'color_field': 'room_colour'}"/>
 
                     <field name="price_per_night"/>
+                    <field name="total_price"/>
+                   
+
 
 
 
@@ -55,6 +58,8 @@
                             <field name="name" widget="many2many_tags" options="{'color_field': 'roomtype_colour'}"/>
                             <field name="room_no" widget="many2many_tags" options="{'color_field': 'room_colour'}"/>
                             <field name="price_per_night"/>
+                            <field name="total_price"/>
+                            <!-- <field name="invoice_id" widget="many2one"/> -->
 
                         </group>
                     </sheet>
