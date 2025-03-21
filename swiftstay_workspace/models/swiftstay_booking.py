@@ -19,7 +19,7 @@ class Booking(models.Model):
     check_in = fields.Datetime(string='Check-in Date', required=True, tracking=True)
     check_out = fields.Datetime(string='Check-out Date', required=True, tracking=True)
     duration = fields.Integer(string='Duration (Days)', compute='compute_duration', store=True)
-    no_of_guests = fields.Integer('Number of Guests', tracking=True)
+    no_of_guests = fields.Integer('Number of Guests', tracking=True, default=1)
     name = fields.Many2many(
     'swiftstay.roomtypes', 
     string="Room Types", 
