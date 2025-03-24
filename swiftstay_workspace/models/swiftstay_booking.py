@@ -1,5 +1,9 @@
-from odoo import models, fields, api
+from odoo import models, fields, api, _
+from odoo.exceptions import UserError
+import logging
+import pytz
 
+_logger = logging.getLogger(__name__)
 
 class Booking(models.Model):
     _name = 'swiftstay.booking'
@@ -8,15 +12,21 @@ class Booking(models.Model):
     _inherit = ['mail.thread']
 
     guest_name = fields.Many2one('res.partner', string="Guest Name", required=True, tracking=True)
-    id_no = fields.Char(string='ID Number',size=8, tracking=True) 
-    passport_no = fields.Char(string='Passport Number',size=9, tracking=True)
+    id_no = fields.Char(string='ID Number', size=8, tracking=True) 
+    passport_no = fields.Char(string='Passport Number', size=9, tracking=True)
     email = fields.Char(string='Email Address', compute="compute_email", readonly=True)
     phone_no = fields.Char(string='Phone Number', compute="compute_phone_number", readonly=True)
     check_in = fields.Datetime(string='Check-in Date', required=True, tracking=True)
     check_out = fields.Datetime(string='Check-out Date', required=True, tracking=True)
-    duration = fields.Integer(compute='compute_duration', string='Duration (Days)', store=True)
-    no_of_guests = fields.Integer('Number of Guests', tracking=True)
-    name = fields.Many2many('swiftstay.roomtypes', string="Room Types", tracking=True)  
+    duration = fields.Integer(string='Duration (Days)', compute='compute_duration', store=True)
+    no_of_guests = fields.Integer('Number of Guests', tracking=True, default=1)
+    name = fields.Many2many(
+    'swiftstay.roomtypes', 
+    string="Room Types", 
+    tracking=True,
+    domain="[('has_available_rooms', '=', True)]"
+)
+ 
     room_no = fields.Many2many(
         'swiftstay.rooms', 
         string='Room Number', 
@@ -24,14 +34,32 @@ class Booking(models.Model):
         tracking=True,
         domain="[('room_status', '=', 'available'), ('room_type_id', '=', name)]"
     )
-
-    price_per_night = fields.Float(string="Total Price Per Night (Ksh.)", compute="compute_total_price", store=True)
+    price_per_night = fields.Float(string="Total Price Per Night (Ksh.)", compute="compute_total_price_per_night", store=True)
+    total_price = fields.Float(string="Total Price (Ksh.)", compute="compute_total_price", store=True)
 
     state = fields.Selection([
         ('available', 'Available'),
-        ('occupied', 'Occupied'),
-        ('checked_out','Checked Out')
+        ('reserved_by_admin', 'Reserved By Admin'),
+        ('reserved_by_guest','Reserved By Guest'),
+        ('checked_out', 'Checked Out')
     ], string='State', default="available") 
+    
+    
+    check_in_eat = fields.Datetime(string='Check-in (EAT)', compute="compute_eat_times", store=True)
+    check_out_eat = fields.Datetime(string='Check-out (EAT)', compute="compute_eat_times", store=True)
+
+    @api.depends('check_in', 'check_out')
+    def compute_eat_times(self):
+        EAT = pytz.timezone('Africa/Nairobi')
+
+        for record in self:
+            if record.check_in:
+                check_in_eat = record.check_in.replace(tzinfo=pytz.utc).astimezone(EAT)
+            record.check_in_eat = check_in_eat.replace(tzinfo=None)
+            if record.check_out:
+                check_out_eat = record.check_out.replace(tzinfo=pytz.utc).astimezone(EAT)
+            record.check_out_eat = check_out_eat.replace(tzinfo=None)
+
 
     @api.depends('guest_name')
     def compute_email(self):
@@ -52,16 +80,63 @@ class Booking(models.Model):
                 record.duration = 0
 
     @api.depends('room_no')
-    def compute_total_price(self):
+    def compute_total_price_per_night(self):
         for record in self:
             record.price_per_night = sum(record.room_no.mapped('price_per_night'))
-
+    
+    @api.depends('price_per_night')
+    def compute_total_price(self):
+        for record in self:
+            record.total_price = record.duration * record.price_per_night
+    
     @api.model
     def create(self, vals):
         booking = super(Booking, self).create(vals)
+
+        
+        is_admin_or_officer = self.env.user.has_group('swiftstay_workspace.group_swiftstay_admin') or \
+                            self.env.user.has_group('swiftstay_workspace.group_swiftstay_officer')
+
         if 'room_no' in vals and booking.room_no:
             booking.room_no.write({'room_status': 'occupied'})
-        booking.state = 'occupied'
+
+        if is_admin_or_officer:
+            booking.state = 'reserved_by_admin'
+        else:
+            booking.state = 'reserved_by_guest'  
+
+       
+        invoice_lines = [
+            (0, 0, {
+                'product_id': room.name.id,
+                'name': room.room_type_id.name,
+                'quantity': booking.duration,
+                'price_unit': room.price_per_night
+            })
+            for room in booking.room_no if room.name
+        ]
+
+        if invoice_lines:
+            self.env['account.move'].create({
+                'partner_id': booking.guest_name.id,
+                'move_type': 'out_invoice',
+                'invoice_date': fields.Date.today(),
+                'invoice_line_ids': invoice_lines
+            })
+
+      
+        try:
+            email_template = self.env.ref('swiftstay_workspace.booking_confirmation_email_template')
+            if email_template and booking.guest_name.email:
+                email_template.sudo().write({'email_to': booking.guest_name.email})
+                _logger.info(f"Booking Email: {booking.guest_name.email}")
+                email_template.sudo().send_mail(booking.id, force_send=True)
+                _logger.info("Email sent successfully!")
+        except Exception as e:
+            _logger.error("Failed to send email: %s", e)
+            raise UserError("There was an issue sending the booking confirmation email.")
+        
+        
         return booking
 
 
@@ -69,5 +144,9 @@ class Booking(models.Model):
     def action_confirm(self):
         for booking in self:
             booking.write({'state': 'checked_out'})
+
+          
             if booking.room_no:
                 booking.room_no.write({'room_status': 'available'})
+
+                
