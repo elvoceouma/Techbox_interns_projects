@@ -1,21 +1,19 @@
 from odoo import models, fields
 
-
-class Rental(models.Model):
+class RentalManagement(models.Model):
     _name = 'rental.management'
-    _description = 'Rental Model'
+    _description = 'Rental Management'
     _inherit = ['mail.thread', 'mail.activity.mixin']
-    _rec_name = 'name'
 
-
-    name = fields.Char(string='Tenant Name', required=True)
-    house_number = fields.Char(string='House Number')
-    house_type = fields.Selection([
-        ('bedsitter', 'Bedsitter'),
-        ('one_bedroom', 'One Bedroom'),
-        ('two_bedroom', 'Two Bedroom'),
-    ], string='House Type', default='bedsitter')
-    email = fields.Char(string='Email')
-    phone_number = fields.Char(string='Phone Number')
-    Rent_amount = fields.Float(string='Rent Amount')
-    date = fields.Date(string='Date Due')
+    name = fields.Char(string="Contract Reference", required=True, tracking=True)
+    tenant_id = fields.Many2one('res.partner', string="Tenant", required=True, tracking=True)
+    property_id = fields.Many2one('rental.property', string="Property", required=True, tracking=True)
+    unit_id = fields.Many2one('rental.unit', string="Rental Unit", required=True, tracking=True)
+    start_date = fields.Date(string="Start Date", required=True, tracking=True)
+    end_date = fields.Date(string="End Date", required=True, tracking=True)
+    rent_amount = fields.Float(string="Rent Amount", required=True, tracking=True)
+    status = fields.Selection([
+        ('draft', 'Draft'),
+        ('active', 'Active'),
+        ('terminated', 'Terminated')
+    ], string="Status", default="draft", tracking=True)

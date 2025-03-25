@@ -16,7 +16,9 @@
         'security/ir.model.access.csv',
         'views/rental_core_views.xml',
         'views/menu_action_views.xml',
-        'views/rental_views.xml',
+        'views/rental_property_views.xml',
+        'views/rental_unit_views.xml',
+
         
     ],
     'installable': True,

@@ -1,37 +1,69 @@
-<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
-    <record id="rental_management_view_form" model="ir.ui.view">
-        <field name="name">rental.management.view.form</field>
+    <!-- Tree View -->
+    <record id="view_rental_management_tree" model="ir.ui.view">
+        <field name="name">rental.management.tree</field>
         <field name="model">rental.management</field>
         <field name="arch" type="xml">
-            <form string="Rental">
-                <sheet>
-                    <group>
-                        <field name="name"></field>
-                        <field name="house_number"></field>
-                        <field name="house_type"></field>
-                        <field name="email"></field>
-                        <field name="phone_number"></field>
-                        <field name="Rent_amount"></field>
-                        <field name="date"></field>
-
-                    </group>
-                </sheet>
-            </form>
-        </field>
-    </record>
-    <record id="rental_management_view_tree" model="ir.ui.view">
-        <field name="name">rental.management.view.tree</field>
-        <field name="model">rental.management</field>
-        <field name="arch" type="xml">
-            <tree string="Rentals">
-                <field name="name"></field>
-                <field name="house_number"></field>
-                <field name="house_type"></field>
-                <field name="email"></field>
+            <tree string="Rental Contracts">
+                <field name="name"/>
+                <field name="tenant_id"/>
+                <field name="property_id"/>
+                <field name="unit_id"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="rent_amount"/>
+                <field name="status"/>
             </tree>
         </field>
     </record>
 
+    <!-- Form View -->
+    <record id="view_rental_management_form" model="ir.ui.view">
+        <field name="name">rental.management.form</field>
+        <field name="model">rental.management</field>
+        <field name="arch" type="xml">
+            <form string="Rental Contract">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="tenant_id"/>
+                        <field name="property_id"/>
+                        <field name="unit_id"/>
+                    </group>
+                    <group>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                        <field name="rent_amount"/>
+                        <field name="status"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Kanban View -->
+    <record id="view_rental_management_kanban" model="ir.ui.view">
+        <field name="name">rental.management.kanban</field>
+        <field name="model">rental.management</field>
+        <field name="arch" type="xml">
+            <kanban string="Rental Contracts">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card">
+                            <strong><field name="name"/></strong>
+                            <div><span class="fa fa-user"/> <field name="tenant_id"/></div>
+                            <div><span class="fa fa-building"/> <field name="property_id"/></div>
+                            <div><span class="fa fa-calendar"/> <field name="start_date"/> - <field name="end_date"/></div>
+                            <div><span class="fa fa-money"/> <field name="rent_amount"/></div>
+                            <div><span class="fa fa-tag"/> <field name="status"/></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
 </odoo>

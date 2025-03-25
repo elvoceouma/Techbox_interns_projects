@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="rental_management_action" model="ir.actions.act_window">
-        <field name="name">Open rental</field>
-        <field name="res_model">rental.management</field>
-        <field name="view_mode">tree,form</field>
-        <field name= "view_id" ref= "rental_management_view_tree"></field>
-    </record>
+<record id="rental_management_action" model="ir.actions.act_window">
+    <field name="name">Rentals</field>
+    <field name="res_model">rental.management</field>
+    <field name="view_mode">kanban,tree,form</field>
+</record>
     <menuitem id="rental_menu" name="Rental Management" sequence="10"/>
     <menuitem id="retal_submenu_menu" name="Rental Management" action="rental_management_action" groups="base.group_user" parent="rental_menu" sequence="10"/>
     <record id="action_rental_property" model="ir.actions.act_window">
         <field name="name">Properties</field>
         <field name="res_model">rental.property</field>
-        <field name="view_mode">tree,form</field>
+       <field name="view_mode">kanban,tree,form</field>
     </record>
 
     <record id="action_rental_unit" model="ir.actions.act_window">
         <field name="name">Units</field>
         <field name="res_model">rental.unit</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">kanban,tree,form</field>
     </record>
 
     <menuitem id="rental_properties_menu" name="Properties" parent="rental_menu" action="action_rental_property" sequence="20"/>

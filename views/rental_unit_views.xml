@@ -7,14 +7,12 @@
             <tree string="Rental Units">
                 <field name="name"/>
                 <field name="property_id"/>
-                <field name="tenant_id"/>
-                <field name="rent_price"/>
                 <field name="status"/>
             </tree>
         </field>
     </record>
 
-    <!-- Form View  -->
+    <!-- Form View -->
     <record id="view_rental_unit_form" model="ir.ui.view">
         <field name="name">rental.unit.form</field>
         <field name="model">rental.unit</field>
@@ -27,8 +25,13 @@
                         <field name="tenant_id"/>
                         <field name="rent_price"/>
                         <field name="status"/>
+                        <field name="rental_management_id"/>
                     </group>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
             </form>
         </field>
     </record>
@@ -38,32 +41,14 @@
         <field name="name">rental.unit.kanban</field>
         <field name="model">rental.unit</field>
         <field name="arch" type="xml">
-            <kanban string="Rental Units" class="o_kanban_view">
+            <kanban string="Rental Units">
                 <templates>
                     <t t-name="kanban-box">
-                        <div class="oe_kanban_card rental_unit_kanban" t-att-class="'status_' + record.status.raw_value">
-                            <div class="unit_header">
-                                <span class="fa fa-key kanban_icon"></span>
-                                <strong class="oe_kanban_title">
-                                    <field name="name"/>
-                                </strong>
-                            </div>
-                            <div class="unit_body">
-                                <span><i class="fa fa-building"></i> <field name="property_id"/></span><br/>
-                                <span><i class="fa fa-user"></i> <field name="tenant_id"/></span><br/>
-                                <span><i class="fa fa-money"></i> <field name="rent_price"/></span>
-                                <div class="oe_kanban_status">
-                                    <t t-if="record.status.raw_value == 'available'">
-                                        <span class="badge badge-success">Available</span>
-                                    </t>
-                                    <t t-if="record.status.raw_value == 'rented'">
-                                        <span class="badge badge-danger">Rented</span>
-                                    </t>
-                                    <t t-if="record.status.raw_value == 'maintenance'">
-                                        <span class="badge badge-warning">Maintenance</span>
-                                    </t>
-                                </div>
-                            </div>
+                        <div class="oe_kanban_card">
+                            <strong><field name="name"/></strong>
+                            <div><span class="fa fa-home"/> <field name="property_id"/></div>
+                            <div><span class="fa fa-user"/> <field name="tenant_id"/></div>
+                            <div><span class="fa fa-money"/> <field name="rent_price"/></div>
                         </div>
                     </t>
                 </templates>

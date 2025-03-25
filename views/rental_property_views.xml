@@ -27,9 +27,13 @@
                         <field name="property_type"/>
                     </group>
                     <group>
-                        <field name="rental_units_ids" widget="one2many_list"/>
+                        <field name="rental_units_ids"/>
                     </group>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
             </form>
         </field>
     </record>
@@ -39,21 +43,14 @@
         <field name="name">rental.property.kanban</field>
         <field name="model">rental.property</field>
         <field name="arch" type="xml">
-            <kanban string="Rental Properties" class="o_kanban_view">
+            <kanban string="Rental Properties">
                 <templates>
                     <t t-name="kanban-box">
-                        <div class="oe_kanban_card property_kanban">
-                            <div class="property_header">
-                                <span class="fa fa-building kanban_icon"></span>
-                                <strong class="oe_kanban_title">
-                                    <field name="name"/>
-                                </strong>
-                            </div>
-                            <div class="property_body">
-                                <span><i class="fa fa-map-marker"></i> <field name="address"/></span><br/>
-                                <span><i class="fa fa-user"></i> <field name="owner_id"/></span><br/>
-                                <span><i class="fa fa-home"></i> <field name="property_type"/></span>
-                            </div>
+                        <div class="oe_kanban_card">
+                            <strong><field name="name"/></strong>
+                            <div><span class="fa fa-map-marker"/> <field name="address"/></div>
+                            <div><span class="fa fa-user"/> <field name="owner_id"/></div>
+                            <div><span class="fa fa-home"/> <field name="property_type"/></div>
                         </div>
                     </t>
                 </templates>
