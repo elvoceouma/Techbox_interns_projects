@@ -28,9 +28,9 @@
             <field name="arch" type="xml">
                 <form string="Rooms">
                     <header>
-                        <button name="action_available" string="Available" class="oe_highlight" type="object"/>
+                        <!-- <button name="action_available" string="Available" class="oe_highlight" type="object"/> -->
                          <button name="action_maintenance" string="Under Maintenance" class="oe_highlight" type="object"/>
-                        <button name="action_occupied" string="Occupied" class="oe_highlight" type="object"/>
+                        <!-- <button name="action_occupied" string="Occupied" class="oe_highlight" type="object"/> -->
                         <field name="room_status" widget="statusbar"/>
                     </header>
                     <sheet>
