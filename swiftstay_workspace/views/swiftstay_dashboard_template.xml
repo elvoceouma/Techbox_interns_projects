@@ -1,0 +1,64 @@
+<odoo>
+    <template id="user_dashboard" name="User Dashboard - My Bookings">
+        <t t-call="website.layout">
+            <div class="container py-5">
+                <h2 class="mb-4 text-center">My Bookings</h2>
+                
+                <t t-if="bookings">
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                        <t t-foreach="bookings" t-as="booking">
+                            <div class="col">
+                                <div class="card h-100 shadow-sm border-0">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="card-title mb-0">
+                                            <t t-foreach="booking.room_no" t-as="room">
+                                                <span t-esc="room.display_name"/>
+                                                <t t-if="not room_last">, </t>
+                                            </t>
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <span t-attf-class="badge bg-{{ 'success' if booking.state == 'reserved_by_guest' else 'warning' if booking.state == 'checked_out' else 'info' }}">
+                                                <t t-esc="booking.state.replace('_', ' ').title()"/>
+
+                                            </span>
+                                            <small class="text-muted">Booked on <t t-esc="booking.create_date.strftime('%b %d, %Y')"/></small>
+                                        </div>
+                                        
+                                        <div class="booking-details">
+                                            <div class="mb-2">
+                                                <i class="fa fa-calendar-check-o me-2" aria-hidden="true"></i>
+                                               <strong>Check-in:</strong> <t t-esc="booking.check_in_eat.strftime('%a, %b %d, %Y %I:%M %p')"/>
+
+                                            </div>
+                                            <div class="mb-2">
+                                                <i class="fa fa-calendar-times-o me-2" aria-hidden="true"></i>
+                                                 <strong>Check-out:</strong> <t t-esc="booking.check_out_eat.strftime('%a, %b %d, %Y %I:%M %p')"/>
+                                            </div>
+                                            <div>
+                                                <i class="fa fa-users me-2" aria-hidden="true"></i>
+                                                <strong>Guests:</strong> <t t-esc="booking.no_of_guests"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </t>
+                <t t-else="">
+                    <div class="card shadow-sm border-0 p-5 text-center">
+                        <div class="card-body">
+                            <i class="fa fa-calendar fa-4x text-muted mb-3"></i>
+                            <h4 class="text-muted">You have no bookings yet</h4>
+                            <p class="mt-3">Ready to plan your stay? Browse our available rooms and make your first booking!</p>
+                            <a href="/available_rooms" class="btn btn-primary mt-2">Browse Rooms</a>
+                        </div>
+                    </div>
+                </t>
+            </div>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,144 @@
+<odoo>
+    <template id="room_details" name="Available Rooms">
+        <t t-call="website.layout">
+            <div class="oe_structure">
+                <section class="bg-light py-5">
+                    <div class="container">
+                     
+                        <div class="text-center mb-5">
+                            <h1 class="display-4 fw-bold">Find Your Perfect Room</h1>
+                            <p class="lead text-muted">Discover comfort and luxury for your stay</p>
+                        </div>
+
+                        <form action="/room_booking" method="post">
+                        
+                            <div class="room-categories mb-4">
+                                <t t-foreach="grouped_rooms.items()" t-as="room_group">
+                                    <div class="mb-5">
+                                        <div class="d-flex align-items-center mb-4">
+                                            <div class="border-bottom flex-grow-1"></div>
+                                            <h2 class="text-primary px-4 mb-0">
+                                                <t t-esc="room_group[0]"/>
+                                            </h2>
+                                            <div class="border-bottom flex-grow-1"></div>
+                                        </div>
+
+                                        <div class="row g-4">
+                                            <t t-foreach="room_group[1]" t-as="room">
+                                                <div class="col-md-6 col-lg-4">
+                                                    <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden room-card">
+                                                        <div class="position-relative">
+                                                            <img t-if="room.room_image" t-attf-src="data:image/png;base64,{{room.room_image}}" class="card-img-top" style="height: 220px; object-fit: cover;"/>
+                                                            <div class="position-absolute bottom-0 end-0 p-3">
+                                                                <span class="badge bg-primary rounded-pill fs-6 px-3 py-2">
+                                                                    Ksh <t t-esc="room.price_per_night"/>
+                                                                <small>per night</small>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body p-4">
+                                                        <h4 class="card-title mb-3">Room <t t-esc="room.name.name"/>
+                                                        </h4>
+
+                                                        <div class="d-flex flex-wrap gap-3 mb-3">
+                                                            <div class="feature-badge">
+                                                                <i class="fa fa-bed me-1" aria-hidden="true"></i>
+                                                                <t t-esc="room.num_beds"/>
+ Beds
+                                                            </div>
+                                                            <div class="feature-badge">
+                                                                <i class="fa fa-building me-1" aria-hidden="true"></i>
+                                                                    Floor <t t-esc="room.floor_number"/>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="d-flex align-items-center mt-3">
+                                                            <div class="form-check">
+                                                                <input type="checkbox" name="room_ids" t-att-value="room.id" multiple="multiple" class="form-check-input" t-att-id="'room_' + str(room.id)"/>
+                                                                <label t-att-for="'room_' + str(room.id)" class="form-check-label">
+                                                                        Select this room
+                                                                </label>
+                                                            </div>
+                                                            <button type="button" class="btn btn-link ms-auto p-0" data-bs-toggle="modal" t-att-data-bs-target="'#roomDetails_' + str(room.id)">
+                                                                    View details
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="modal fade" t-att-id="'roomDetails_' + str(room.id)" tabindex="-1" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Room <t t-esc="room.name.name"/>
+ Details</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <img t-if="room.room_image" t-attf-src="data:image/png;base64,{{room.room_image}}" class="img-fluid rounded" style="width: 100%; object-fit: cover;"/>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <h3>
+                                                                            <t t-esc="room_group[0]"/>
+ - Room <t t-esc="room.name.name"/>
+                                                                        </h3>
+                                                                        <p class="lead text-primary">Ksh <t t-esc="room.price_per_night"/>
+ per night</p>
+
+                                                                        <div class="room-features mb-4">
+                                                                            <div class="d-flex align-items-center mb-2">
+                                                                                <i class="fa fa-bed me-2 text-primary" aria-hidden="true"></i>
+                                                                                <span>
+                                                                                    <t t-esc="room.num_beds"/>
+ Beds</span>
+                                                                            </div>
+                                                                            <div class="d-flex align-items-center mb-2">
+                                                                                <i class="fa fa-building me-2 text-primary" aria-hidden="true"></i>
+                                                                                <span>Floor <t t-esc="room.floor_number"/>
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+
+                        <div class="booking-action py-4">
+                            <div class="row justify-content-center">
+                                <div class="col-md-8 col-lg-6">
+                                    <div class="card border-0 shadow-lg rounded-3">
+                                        <div class="card-body p-4 text-center">
+                                            <h4 class="mb-3">Ready to confirm your selection?</h4>
+                                            <p class="text-muted mb-4">Select your preferred rooms and proceed to complete your booking</p>
+                                            <button type="submit" class="btn btn-primary btn-lg rounded-pill px-5 py-3">
+                                                <i class="fa fa-check-circle me-2" aria-hidden="true"></i>
+                                                    Proceed to Booking
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </t>
+</template>
+
+
+</odoo>

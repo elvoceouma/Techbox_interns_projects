@@ -1,0 +1,48 @@
+<odoo>
+    <data>
+        <record id="booking_confirmation_email_template" model="mail.template">
+            <field name="name">Booking Confirmation Email</field>
+            <field name="email_to">${object.guest_name.email}</field>
+            <field name="subject">Booking Confirmation for Your Room Booking</field>
+            <field name="model_id" ref="swiftstay_workspace.model_swiftstay_booking"/>
+            <field name="body_html">
+                <![CDATA[
+                    <div style="font-family: Arial, sans-serif; color: #333;">
+                        <div style="padding: 20px; border: 1px solid #ddd; border-radius: 5px; background-color: #f9f9f9;">
+                            <h2 style="color: #007bff;">Booking Confirmation</h2>
+                            <p>Hello <strong><t t-out="object.guest_name.name"/></strong>,</p>
+                            <p>Thank you for booking with us. Here are your booking details:</p>
+                            
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <tr>
+                                    <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>Check-in Date:</strong></td>
+                                    <td style="padding: 10px; border-bottom: 1px solid #ddd;"><t t-out="object.check_in_eat"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>Check-out Date:</strong></td>
+                                    <td style="padding: 10px; border-bottom: 1px solid #ddd;"><t t-out="object.check_out_eat"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>Number of Guests:</strong></td>
+                                    <td style="padding: 10px; border-bottom: 1px solid #ddd;"><t t-out="object.no_of_guests"/></td>
+                                </tr>
+                            </table>
+                            
+                            <p><strong>Room(s):</strong></p>
+                            <ul style="list-style: none; padding: 0;">
+                                <t t-foreach="object.room_no" t-as="room">
+                                    <li style="padding: 5px 0;">▶ <strong><t t-out="room.name.name"/></strong> (Room Type: <t t-out="room.room_type_id.name"/>)</li>
+                                </t>
+                            </ul>
+                            
+                            <p><strong>Total Price:</strong> <span style="color: #28a745; font-size: 18px;">Ksh. <t t-out="object.total_price"/></span></p>
+                            
+                            <p>We look forward to welcoming you!</p>
+                            <p style="color: #888; font-size: 12px;">If you have any questions, feel free to contact us.</p>
+                        </div>
+                    </div>
+                ]]>
+            </field>
+        </record>
+    </data>
+</odoo>
