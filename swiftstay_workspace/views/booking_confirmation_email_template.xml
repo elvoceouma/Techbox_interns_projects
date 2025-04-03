@@ -38,7 +38,7 @@
                             <p><strong>Total Price:</strong> <span style="color: #28a745; font-size: 18px;">Ksh. <t t-out="object.total_price"/></span></p>
                             
                             <p>We look forward to welcoming you!</p>
-                            <p style="color: #888; font-size: 12px;">If you have any questions, feel free to contact us.</p>
+                            <p style="color: #888; font-size: 12px;">If you have any questions, feel free to contact us!</p>
                         </div>
                     </div>
                 ]]>
