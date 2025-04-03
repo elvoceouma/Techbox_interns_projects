@@ -41,7 +41,7 @@
             <field name="arch" type="xml">
                 <form string="Booking">
                     <header>
-                        <button name="action_confirm" string="Check Out" class="oe_highlight" type="object" confirm="Are you certain you want to proceed with checking out this guest?"/>
+                       <button name="action_confirm" string="Check Out" class="oe_highlight" type="object" confirm="Are you certain you want to proceed with checking out this guest?" invisible="state == 'checked_out'"/>
                         <field name="state" widget="statusbar"/>
                     </header>
                     <sheet>
