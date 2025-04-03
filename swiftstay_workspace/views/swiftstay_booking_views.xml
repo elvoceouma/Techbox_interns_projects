@@ -24,7 +24,7 @@
 
                     <field name="price_per_night"/>
                     <field name="total_price"/>
-                   
+
 
 
 
@@ -41,7 +41,7 @@
             <field name="arch" type="xml">
                 <form string="Booking">
                     <header>
-                       <button name="action_confirm" string="Check Out" class="oe_highlight" type="object" confirm="Are you certain you want to proceed with checking out this guest?" invisible="state == 'checked_out'"/>
+                        <button name="action_confirm" string="Check Out" class="oe_highlight" type="object" confirm="Are you certain you want to proceed with checking out this guest?" invisible="state == 'checked_out'"/>
                         <field name="state" widget="statusbar"/>
                     </header>
                     <sheet>
@@ -88,30 +88,26 @@
                     <field name="room_no" options="{'color_field': 'room_colour'}"/>
 
 
-
-
                     <templates>
                         <t t-name="kanban-box">
                             <div t-attf-class="oe_kanban_global_click">
-                                <div class="oe_kanban_details">
+                                <div class="oe_kanban_details d-flex flex-column ml-3">
+                                    <strong class="o_kanban_record_title">
+                                        <field name="guest_name"/>
+                                    </strong>
                                     <ul>
-                                        <li>Guest Name: <field name="guest_name"/>
-                                        </li>
-
                                         <li>Check-in: <field name="check_in"/>
                                         </li>
                                         <li>Check-out: <field name="check_out"/>
                                         </li>
-
                                         <li>Room Number: <field name="room_no" options="{'color_field': 'room_colour'}"/>
                                         </li>
-
-
                                     </ul>
                                 </div>
                             </div>
                         </t>
                     </templates>
+
                 </kanban>
             </field>
         </record>
