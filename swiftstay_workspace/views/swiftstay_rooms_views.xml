@@ -28,8 +28,8 @@
             <field name="arch" type="xml">
                 <form string="Rooms">
                     <header>
-                       <button name="action_available" string="Available" class="oe_highlight" type="object" invisible="room_status == 'available' or room_status == 'occupied'"/>
-                        <button name="action_maintenance" string="Under Maintenance" class="oe_highlight" type="object" invisible="room_status == 'maintenance' or room_status == 'occupied'"/>
+                       <button name="action_available" string="Available" class="oe_highlight" type="object" invisible="room_status == 'available' or room_status == 'occupied'" confirm="Are you sure you want to change the status of this room to 'Available'?"/>
+                        <button name="action_maintenance" string="Under Maintenance" class="oe_highlight" type="object" confirm="Are you sure you want to change the status of this room to 'Under Maintenance'?" invisible="room_status == 'maintenance' or room_status == 'occupied'"/>
                         <!-- <button name="action_occupied" string="Occupied" class="oe_highlight" type="object"/> -->
                         <field name="room_status" widget="statusbar"/>
                     </header>
