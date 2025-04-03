@@ -74,8 +74,10 @@
                                     <strong class="o_kanban_record_title">
                                         <field name="name"/>
                                     </strong>
-                                    <ul>
-                                        <li>Room Type: <field name="room_type_id"/>
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            <i class="fa fa-bed mr-1" title="Room Type"></i>
+                        Room Type: <field name="room_type_id"/>
                                         </li>
                                     </ul>
                                 </div>

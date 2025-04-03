@@ -95,12 +95,18 @@
                                     <strong class="o_kanban_record_title">
                                         <field name="guest_name"/>
                                     </strong>
-                                    <ul>
-                                        <li>Check-in: <field name="check_in"/>
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            <i class="fa fa-sign-in text-success mr-1" title="Check-in"></i>  
+                        Check-in: <field name="check_in"/>
                                         </li>
-                                        <li>Check-out: <field name="check_out"/>
+                                        <li>
+                                            <i class="fa fa-sign-out text-danger mr-1" title="Check-out"></i>
+                        Check-out: <field name="check_out"/>
                                         </li>
-                                        <li>Room Number: <field name="room_no" options="{'color_field': 'room_colour'}"/>
+                                        <li>
+                                            <i class="fa fa-key mr-1" title="Room Number"></i>
+                        Room Number(s): <field name="room_no" options="{'color_field': 'room_colour'}"/>
                                         </li>
                                     </ul>
                                 </div>
