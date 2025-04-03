@@ -101,7 +101,7 @@
         <record id="action_swiftstay_room_types" model="ir.actions.act_window">
             <field name="name">Room Types</field>
             <field name="res_model">swiftstay.roomtypes</field>
-            <field name="view_mode">tree,form,kanban</field>
+            <field name="view_mode">kanban,tree,form</field>
             <field name="search_view_id" ref="view_swiftstay_room_types_search"/>
 
         </record>
