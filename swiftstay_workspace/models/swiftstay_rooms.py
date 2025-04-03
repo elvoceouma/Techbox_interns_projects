@@ -34,9 +34,9 @@ class Rooms(models.Model):
     #     for room in self:
     #         room.room_status = 'occupied'
             
-    # def action_available(self):
-    #     for room in self:
-    #         room.room_status = 'available'
+    def action_available(self):
+        for room in self:
+            room.room_status = 'available'
     
     def action_maintenance(self):
         for room in self:
