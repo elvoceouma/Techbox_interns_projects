@@ -95,6 +95,8 @@ class Booking(models.Model):
     @api.model
     def create(self, vals):
         booking = super(Booking, self).create(vals)
+        if 'room_no' in vals and booking.room_no:
+            booking.room_no.write({'room_status': 'occupied'})
 
         
         is_admin_or_officer = self.env.user.has_group('swiftstay_workspace.group_swiftstay_admin') or \
